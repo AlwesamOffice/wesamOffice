@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>مكتب الوسام - منصة التقديم الجامعي</title>
+    <style>
+        :root { --primary-color: #004080; --bg-color: #f4f7f6; }
+        body { font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; background-color: var(--bg-color); margin: 0; padding: 20px; }
+        .container { max-width: 650px; background: white; margin: 30px auto; padding: 40px; border-radius: 12px; box-shadow: 0 4px 15px rgba(0,0,0,0.08); }
+        h2 { color: var(--primary-color); text-align: center; margin-bottom: 5px; }
+        p.subtitle { text-align: center; color: #666; margin-bottom: 25px; }
+        .form-group { margin-bottom: 20px; }
+        label { display: block; margin-bottom: 8px; font-weight: 600; color: #333; }
+        input[type="text"], select, input[type="file"] { width: 100%; padding: 12px; border: 1px solid #ccc; border-radius: 6px; box-sizing: border-box; font-size: 15px; }
+        input:focus, select:focus { border-color: var(--primary-color); outline: none; }
+        button { background-color: var(--primary-color); color: white; border: none; padding: 14px; width: 100%; border-radius: 6px; font-size: 16px; font-weight: bold; cursor: pointer; transition: background 0.3s; }
+        button:hover { background-color: #003366; }
+        #loading { display: none; text-align: center; color: #004080; margin-top: 15px; font-weight: bold; }
+        #success-msg { display: none; background: #d4edda; color: #155724; padding: 15px; border-radius: 6px; text-align: center; margin-top: 20px; font-weight: bold; }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <h2>مكتب الوسام للخدمات الجامعية</h2>
+    <p class="subtitle">منصة استقبال طلبات الطلاب والمستندات الرسمية</p>
+    
+    <form id="applicationForm">
+        <div class="form-group">
+            <label for="fullname">الاسم الكامل (حسب الجواز):</label>
+            <input type="text" id="fullname" required placeholder="أدخل اسمك الثلاثي أو الرباعي">
+        </div>
+
+        <div class="form-group">
+            <label for="phone">رقم الهاتف (مع رمز الدولة للواتساب):</label>
+            <input type="text" id="phone" required placeholder="مثال: +968XXXXXXXX">
+        </div>
+
+        <div class="form-group">
+            <label for="major">التخصص الأكاديمي المرغوب:</label>
+            <select id="major" required>
+                <option value="">-- اختر التخصص --</option>
+                <option value="طب بشرى">طب بشرى</option>
+                <option value="هندسة حيوية">هندسة حيوية / تكنولوجيا</option>
+                <option value="هندسة">هندسة عامة</option>
+                <option value="تخصصات إدارية وعلمية">تخصصات أخرى</option>
+            </select>
+        </div>
+
+        <div class="form-group">
+            <label for="documentFile">رفع المستندات (صورة الشهادة أو جواز السفر - PDF أو صور):</label>
+            <input type="file" id="documentFile" required>
+        </div>
+
+        <button type="submit" id="submitBtn">إرسال الطلب والمستندات</button>
+        <div id="loading">جاري حفظ البيانات، يرجى الانتظار...</div>
+    </form>
+
+    <div id="success-msg">تم إرسال طلبك بنجاح! سيتم التواصل معك عبر الواتساب قريباً.</div>
+</div>
+
+<script>
+    const form = document.getElementById('applicationForm');
+    const loading = document.getElementById('loading');
+    const successMsg = document.getElementById('success-msg');
+    const submitBtn = document.getElementById('submitBtn');
+
+    form.addEventListener('submit', (e) => {
+        e.preventDefault();
+        submitBtn.style.display = 'none';
+        loading.style.display = 'block';
+
+        // محاكاة الإرسال الناجح لحين ربط قاعدة البيانات
+        setTimeout(() => {
+            loading.style.display = 'none';
+            successMsg.style.display = 'block';
+            form.reset();
+        }, 1500);
+    });
+</script>
+
+</body>
+</html>
