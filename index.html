@@ -3,13 +3,17 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>مكتب الوسام - للتقديم والمنح الجامعية</title>
+    <title>مكتب الوسام للخدمات والمنح الجامعية</title>
     <style>
         :root {
-            --primary-color: #004080;
-            --secondary-color: #0066cc;
-            --bg-color: #f4f7f6;
+            --primary-color: #003366;
+            --secondary-color: #0055a5;
+            --accent-color: #d4af37;
+            --bg-color: #f8f9fa;
             --text-color: #333333;
+            --success-color: #28a745;
+            --pending-color: #ffc107;
+            --required-color: #ff3b30;
         }
         body {
             font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
@@ -17,28 +21,40 @@
             margin: 0;
             padding: 20px;
             color: var(--text-color);
-            line-height: 1.6;
+            line-height: 1.7;
         }
         .container {
-            max-width: 700px;
+            max-width: 750px;
             background: white;
-            margin: 30px auto;
+            margin: 20px auto;
             padding: 40px;
-            border-radius: 12px;
-            box-shadow: 0 4px 15px rgba(0,0,0,0.08);
+            border-radius: 14px;
+            box-shadow: 0 6px 20px rgba(0,0,0,0.08);
         }
-        .header {
+        .logo-area {
             text-align: center;
-            margin-bottom: 30px;
+            margin-bottom: 20px;
         }
-        .header h1 {
-            color: var(--primary-color);
+        .logo-img {
+            max-width: 150px;
+            height: auto;
             margin-bottom: 10px;
-            font-size: 28px;
+            border-radius: 10px;
         }
-        .header p {
-            color: #666;
-            font-size: 16px;
+        .page-section {
+            display: none;
+        }
+        .page-section.active {
+            display: block;
+        }
+        .article-box {
+            background: #fdfbf7;
+            border-right: 5px solid var(--accent-color);
+            padding: 20px;
+            border-radius: 6px;
+            margin-bottom: 25px;
+            font-size: 15px;
+            color: #444;
         }
         .form-group {
             margin-bottom: 22px;
@@ -49,11 +65,17 @@
             font-weight: 600;
             color: #444;
         }
-        input[type="text"], input[type="tel"], input[type="email"], select, input[type="file"] {
+        .required-star {
+            color: var(--required-color);
+            font-size: 16px;
+            margin-right: 3px;
+            font-weight: bold;
+        }
+        input[type="text"], input[type="email"], input[type="password"], select, input[type="file"] {
             width: 100%;
             padding: 12px;
             border: 1px solid #ccc;
-            border-radius: 6px;
+            border-radius: 8px;
             box-sizing: border-box;
             font-size: 15px;
             outline: none;
@@ -62,104 +84,313 @@
         input:focus, select:focus {
             border-color: var(--primary-color);
         }
-        button {
+        .captcha-box {
+            background: #f1f3f5;
+            padding: 12px;
+            border-radius: 8px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            margin-bottom: 20px;
+            font-weight: 600;
+            font-size: 14px;
+        }
+        .captcha-box input {
+            width: 20px;
+            height: 20px;
+            cursor: pointer;
+        }
+        button.btn {
             background-color: var(--primary-color);
             color: white;
             border: none;
             padding: 14px;
             width: 100%;
-            border-radius: 6px;
-            font-size: 18px;
+            border-radius: 8px;
+            font-size: 17px;
             font-weight: bold;
             cursor: pointer;
-            transition: background-color 0.3s;
+            transition: background 0.3s;
         }
-        button:hover {
+        button.btn:hover {
             background-color: var(--secondary-color);
         }
-        #loading {
-            display: none;
+        .switch-text {
             text-align: center;
-            color: var(--primary-color);
-            margin-top: 15px;
-            font-weight: bold;
+            margin-top: 20px;
+            color: #666;
+            font-size: 14px;
         }
-        #success-msg {
-            display: none;
-            background: #d4edda;
-            color: #155724;
+        .switch-text a {
+            color: var(--primary-color);
+            text-decoration: none;
+            font-weight: bold;
+            cursor: pointer;
+        }
+        .switch-text a:hover {
+            text-decoration: underline;
+        }
+        .status-card {
+            background: #fff3cd;
+            border: 1px solid #ffeeba;
             padding: 20px;
             border-radius: 8px;
-            text-align: center;
-            font-weight: bold;
             margin-top: 20px;
+            text-align: center;
+        }
+        .status-badge {
+            display: inline-block;
+            background: var(--pending-color);
+            color: #856404;
+            padding: 6px 15px;
+            border-radius: 20px;
+            font-weight: bold;
+            margin-top: 10px;
+        }
+        /* تنسيق قسم التواصل ليكون أسفل الصفحة الرئيسية تماماً */
+        .contact-box {
+            margin-top: 50px;
+            padding-top: 25px;
+            border-top: 2px solid #f0f0f0;
+            text-align: center;
+            font-size: 14px;
+            color: #555;
+        }
+        .contact-box h4 {
+            color: var(--primary-color);
+            margin-bottom: 12px;
             font-size: 16px;
+        }
+        .contact-links {
+            display: flex;
+            justify-content: center;
+            gap: 12px;
+            flex-wrap: wrap;
+            margin-top: 8px;
+        }
+        .contact-links span {
+            background: #f8f9fa;
+            border: 1px solid #e9ecef;
+            padding: 8px 14px;
+            border-radius: 6px;
+            font-weight: 500;
         }
     </style>
 </head>
 <body>
 
 <div class="container">
-    <div class="header">
-        <h1>مكتب الوسام للخدمات الجامعية</h1>
-        <p>بوابتك الرسمية للتقديم والقبول ومنح التعليم العالي</p>
+    <!-- الشعار الثابت -->
+    <div class="logo-area">
+        <img src="logo.png" alt="مكتب الوسام" class="logo-img">
     </div>
 
-    <!-- استمارة تقديم الطالب -->
-    <form id="applicationForm" onsubmit="handleFormSubmit(event)">
-        <div class="form-group">
-            <label for="fullName">الاسم الرباعي للطالب:</label>
-            <input type="text" id="fullName" name="fullName" required placeholder="أدخل اسمك كاملاً">
+    <!-- 1. واجهة تسجيل الدخول -->
+    <div id="loginPage" class="page-section active">
+        <h2 style="color: var(--primary-color); text-align: center; margin-bottom: 20px;">تسجيل دخول الطالب</h2>
+        <form onsubmit="handleLogin(event)">
+            <div class="form-group">
+                <label>البريد الإلكتروني:</label>
+                <input type="email" required placeholder="example@domain.com">
+            </div>
+            <div class="form-group">
+                <label>كلمة المرور:</label>
+                <input type="password" required placeholder="••••••••">
+            </div>
+            <button type="submit" class="btn">دخول إلى بوابتك</button>
+        </form>
+        <div class="switch-text">
+            ليس لديك حساب معنا؟ <a onclick="showPage('registerPage')">أنشئ حساباً جديداً الآن</a>
         </div>
-
-        <div class="form-group">
-            <label for="phone">رقم الهاتف (واتساب):</label>
-            <input type="tel" id="phone" name="phone" required placeholder="مثال: 00968xxxxxxxx">
-        </div>
-
-        <div class="form-group">
-            <label for="highSchoolType">نوع الشهادة الثانوية:</label>
-            <select id="highSchoolType" name="highSchoolType" required>
-                <option value="">-- اختر نوع الشهادة --</option>
-                <option value="الشهادة الثانوية العمانية">الشهادة الثانوية العمانية</option>
-                <option value="الشهادة العربية">الشهادة العربية</option>
-                <option value="شهادة أخرى">شهادة أخرى</option>
-            </select>
-        </div>
-
-        <div class="form-group">
-            <label for="desiredMajor">التخصص المرغوب:</label>
-            <input type="text" id="desiredMajor" name="desiredMajor" required placeholder="مثال: الطب البشري، هندسة حاسوب...">
-        </div>
-
-        <div class="form-group">
-            <label for="studentFile">رفع الشهادة الثانوية أو الأوراق المطلوبة (PDF أو صور):</label>
-            <input type="file" id="studentFile" name="studentFile" required>
-        </div>
-
-        <button type="submit">إرسال الطلب الآن</button>
-        <div id="loading">جاري إرسال طلبك وحفظ البيانات... ريثما يتم تحويلك...</div>
-    </form>
-
-    <div id="success-msg">
-        تم إرسال طلبك بنجاح إلى مكتب الوسام! 🎉<br>
-        سيتم التواصل معك عبر الواتساب قريباً لاستكمال إجراءات التقديم.
     </div>
+
+    <!-- 2. واجهة إنشاء حساب جديد -->
+    <div id="registerPage" class="page-section">
+        <h2 style="color: var(--primary-color); text-align: center; margin-bottom: 20px;">إنشاء حساب جديد في منصة الوسام</h2>
+        <form onsubmit="handleRegister(event)">
+            <div class="form-group">
+                <label>الاسم الكامل:</label>
+                <input type="text" required placeholder="أدخل اسمك الثلاثي أو الرباعي">
+            </div>
+            <div class="form-group">
+                <label>البريد الإلكتروني:</label>
+                <input type="email" required placeholder="example@domain.com">
+            </div>
+            <div class="form-group">
+                <label>كلمة المرور:</label>
+                <input type="password" required placeholder="أنشئ كلمة مرور قوية">
+            </div>
+            <!-- منع الروبوتات -->
+            <div class="captcha-box">
+                <input type="checkbox" id="robotCheck" required>
+                <label for="robotCheck" style="margin: 0; cursor: pointer;">أنا لست روبوت (تحقق الأمان)</label>
+            </div>
+            <button type="submit" class="btn">تسجيل الحساب وإرسال تفعيل البريد</button>
+        </form>
+        <div class="switch-text">
+            لديك حساب بالفعل؟ <a onclick="showPage('loginPage')">سجل دخولك من هنا</a>
+        </div>
+    </div>
+
+    <!-- 3. لوحة الطالب الرئيسية -->
+    <div id="dashboardPage" class="page-section">
+        <div class="article-box">
+            <strong>مرحباً بك في رحلتك التعليمية مع مكتب الوسام!</strong><br>
+            نحن نؤمن بأن المستقبل يُصنع بالتخطيط السليم. يلتزم مكتب الوسام بتسهيل كافة إجراءات قبولك الجامعي وتوفير أفضل الفرص والمنح الدراسية الإقليمية والدولية بعناية واحترافية تامة لضمان نجاحك الأكاديمي.
+        </div>
+        
+        <div style="text-align: center; margin-top: 25px;">
+            <button class="btn" onclick="showPage('applicationPage')" style="padding: 16px; font-size: 19px;">➕ بدء إنشاء طلب جديد للتقديم</button>
+        </div>
+
+        <!-- معلومات التواصل والاستفسار في أفل الصفحة الرئيسية تماماً -->
+        <div class="contact-box">
+            <h4>للتواصل والاستفسار والمتابعة:</h4>
+            <div class="contact-links">
+                <span>📘 فيسبوك: مكتب الوسام للتقديم</span>
+                <span>🎵 تيك توك: مكتب الوسام للتقديم والمنح الجامعية</span>
+                <span>📧 البريد: wesam.scholarships@gmail.com</span>
+            </div>
+        </div>
+    </div>
+
+    <!-- 4. استمارة التحديد والخدمات والمستندات -->
+    <div id="applicationPage" class="page-section">
+        <h3 style="color: var(--primary-color); border-bottom: 2px solid var(--primary-color); padding-bottom: 8px;">استمارة التقديم والقبول الأكاديمي</h3>
+        
+        <form onsubmit="handleApplicationSubmit(event)">
+            <!-- اختيار الخدمة الأساسية -->
+            <div class="form-group">
+                <label>اختر نوع الخدمة / البرنامج الأساسي: <span class="required-star">*</span></label>
+                <select id="serviceType" onchange="toggleServiceSub()" required>
+                    <option value="">-- اختر نوع التقديم --</option>
+                    <option value="scholarship">التقديم على المنح الدراسية</option>
+                    <option value="university">التقديم على الجامعات</option>
+                </select>
+            </div>
+
+            <!-- الفئة الفرعية (المنح) -->
+            <div class="form-group" id="scholarshipSubGroup" style="display: none;">
+                <label>اختر فئة المنحة المطلوبة:</label>
+                <select id="scholarshipType">
+                    <option value="">-- اختر الدولة / المنحة --</option>
+                    <option value="مصر">المنحة المصرية</option>
+                    <option value="تركيا">المنحة التركية</option>
+                    <option value="الصين">المنحة الصينية</option>
+                    <option value="السعودية">المنحة السعودية</option>
+                </select>
+            </div>
+
+            <!-- الفئة الفرعية (الجامعات) -->
+            <div class="form-group" id="universitySubGroup" style="display: none;">
+                <label>اختر وجهة الجامعات المطلوبة:</label>
+                <select id="universityType">
+                    <option value="">-- اختر الوجهة الجامعية --</option>
+                    <option value="جامعات مصر">الجامعات المصرية</option>
+                    <option value="جامعات الصين">الجامعات الصينية</option>
+                    <option value="جامعات أخرى">جهات جامعية أخرى</option>
+                </select>
+            </div>
+
+            <hr style="border: 0; border-top: 1px solid #ddd; margin: 25px 0;">
+            <h4 style="color: var(--secondary-color); margin-bottom: 15px;">المستندات والأوراق الثبوتية:</h4>
+
+            <!-- المستندات الإلزامية (نجمة حمراء صغيرة) -->
+            <div class="form-group">
+                <label>صورة جواز السفر <span class="required-star">*</span></label>
+                <input type="file" required>
+            </div>
+
+            <div class="form-group">
+                <label>شهادة الثانوية العامة / كشف الدرجات <span class="required-star">*</span></label>
+                <input type="file" required>
+            </div>
+
+            <!-- المستندات غير الإلزامية (فارغة بدون نجمة) -->
+            <div class="form-group">
+                <label>شهادة الميلاد</label>
+                <input type="file">
+            </div>
+
+            <div class="form-group">
+                <label>صورة شخصية حديثة</label>
+                <input type="file">
+            </div>
+
+            <div class="form-group">
+                <label>خطاب الدافع (Motivation Letter)</label>
+                <input type="file">
+            </div>
+
+            <div class="form-group">
+                <label>خطاب التوصية (Recommendation Letter)</label>
+                <input type="file">
+            </div>
+
+            <button type="submit" class="btn" style="background-color: var(--success-color);">إرسال الطلب النهائي للمكتب</button>
+        </form>
+    </div>
+
+    <!-- 5. صفحة تتبع حالة الطلب ورفع رسوم التحويل -->
+    <div id="statusPage" class="page-section">
+        <h3 style="color: var(--primary-color); text-align: center;">حالة طلبك الحالي</h3>
+        <div class="status-card">
+            <p style="margin: 0; font-size: 16px; font-weight: bold;">حالة الطلب في النظام:</p>
+            <div class="status-badge">قيد المراجعة من قبل موظفي المكتب ⏳</div>
+            <p style="margin-top: 15px; font-size: 14px; color: #555;">
+                سيقوم فريقنا بمطابقة أوراقك وشروطك مع المنح المتاحة قريباً.
+            </p>
+        </div>
+
+        <div style="background: #e9ecef; padding: 20px; border-radius: 8px; margin-top: 25px;">
+            <h4 style="margin-top: 0; color: var(--primary-color);">إشعار تحويل الرسوم المقررة:</h4>
+            <p style="font-size: 14px; color: #555;">الرجاء تحميل إيصال أو إشعار تحويل الرسوم المقررة من قبل المكتب لاستكمال اعتماد طلبك رسمياً:</p>
+            <form onsubmit="handleFeeSubmit(event)">
+                <div class="form-group">
+                    <input type="file" required>
+                </div>
+                <button type="submit" class="btn" style="padding: 10px;">إرسال إيصال الرسوم للمكتب</button>
+            </form>
+        </div>
+    </div>
+
 </div>
 
 <script>
-    function handleFormSubmit(event) {
-        event.preventDefault(); // منع إعادة تحميل الصفحة
-        
-        // إظهار رسالة التحميل
-        document.getElementById('loading').style.display = 'block';
-        
-        setTimeout(function() {
-            // إخفاء النموذج وإظهار رسالة النجاح
-            document.getElementById('applicationForm').style.display = 'none';
-            document.getElementById('loading').style.display = 'none';
-            document.getElementById('success-msg').style.display = 'block';
-        }, 1500);
+    function showPage(pageId) {
+        const pages = document.querySelectorAll('.page-section');
+        pages.forEach(page => page.classList.remove('active'));
+        document.getElementById(pageId).classList.add('active');
+        window.scrollTo(0, 0);
+    }
+
+    function handleLogin(event) {
+        event.preventDefault();
+        alert('تم تسجيل الدخول بنجاح!');
+        showPage('dashboardPage');
+    }
+
+    function handleRegister(event) {
+        event.preventDefault();
+        alert('تم إنشاء الحساب بنجاح! تم إرسال رسالة تفعيل إلى بريدك الإلكتروني.');
+        showPage('dashboardPage');
+    }
+
+    function toggleServiceSub() {
+        const val = document.getElementById('serviceType').value;
+        document.getElementById('scholarshipSubGroup').style.display = (val === 'scholarship') ? 'block' : 'none';
+        document.getElementById('universitySubGroup').style.display = (val === 'university') ? 'block' : 'none';
+    }
+
+    function handleApplicationSubmit(event) {
+        event.preventDefault();
+        alert('تم تقديم الطلب بنجاح وتم إرساله إلى طاقم العمل بنجاح!');
+        showPage('statusPage');
+    }
+
+    function handleFeeSubmit(event) {
+        event.preventDefault();
+        alert('تم رفع إشعار تحويل الرسوم بنجاح! سيتم مراجعته واعتماد طلبك نهائياً.');
     }
 </script>
 
