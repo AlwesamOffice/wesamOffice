@@ -71,7 +71,7 @@
             margin-right: 3px;
             font-weight: bold;
         }
-        input[type="text"], input[type="email"], input[type="password"], select, input[type="file"] {
+        input[type="text"], input[type="email"], input[type="password"], select, input[type="file"], textarea {
             width: 100%;
             padding: 12px;
             border: 1px solid #ccc;
@@ -81,8 +81,12 @@
             outline: none;
             transition: border-color 0.3s;
         }
-        input:focus, select:focus {
+        input:focus, select:focus, textarea:focus {
             border-color: var(--primary-color);
+        }
+        textarea {
+            resize: vertical;
+            height: 100px;
         }
         .captcha-box {
             background: #f1f3f5;
@@ -147,7 +151,6 @@
             font-weight: bold;
             margin-top: 10px;
         }
-        /* تنسيق قسم التواصل ليكون أسفل الصفحة الرئيسية تماماً */
         .contact-box {
             margin-top: 50px;
             padding-top: 25px;
@@ -185,19 +188,19 @@
         <img src="logo.png" alt="مكتب الوسام" class="logo-img">
     </div>
 
-    <!-- 1. واجهة تسجيل الدخول -->
+    <!-- 1. واجهة تسجيل الدخول (مربوطة بالخدمة الخارجية لإرسال البيانات إلى إيميلك) -->
     <div id="loginPage" class="page-section active">
         <h2 style="color: var(--primary-color); text-align: center; margin-bottom: 20px;">تسجيل دخول الطالب</h2>
-        <form onsubmit="handleLogin(event)">
+        <form action="https://formspree.io/f/xl1jeppkj" method="POST">
             <div class="form-group">
                 <label>البريد الإلكتروني:</label>
-                <input type="email" required placeholder="example@domain.com">
+                <input type="email" name="email" required placeholder="example@domain.com">
             </div>
             <div class="form-group">
-                <label>كلمة المرور:</label>
-                <input type="password" required placeholder="••••••••">
+                <label>الرسالة أو الاستفسار (أو كلمة المرور):</label>
+                <textarea name="message" required placeholder="اكتب رسالتك أو استفسارك هنا ليصلك مباشرة..."></textarea>
             </div>
-            <button type="submit" class="btn">دخول إلى بوابتك</button>
+            <button type="submit" class="btn">إرسال الطلب إلى الإيميل</button>
         </form>
         <div class="switch-text">
             ليس لديك حساب معنا؟ <a onclick="showPage('registerPage')">أنشئ حساباً جديداً الآن</a>
@@ -243,7 +246,7 @@
             <button class="btn" onclick="showPage('applicationPage')" style="padding: 16px; font-size: 19px;">➕ بدء إنشاء طلب جديد للتقديم</button>
         </div>
 
-        <!-- معلومات التواصل والاستفسار في أفل الصفحة الرئيسية تماماً -->
+        <!-- معلومات التواصل والاستفسار في أسفل الصفحة الرئيسية تماماً -->
         <div class="contact-box">
             <h4>للتواصل والاستفسار والمتابعة:</h4>
             <div class="contact-links">
@@ -362,12 +365,6 @@
         pages.forEach(page => page.classList.remove('active'));
         document.getElementById(pageId).classList.add('active');
         window.scrollTo(0, 0);
-    }
-
-    function handleLogin(event) {
-        event.preventDefault();
-        alert('تم تسجيل الدخول بنجاح!');
-        showPage('dashboardPage');
     }
 
     function handleRegister(event) {
