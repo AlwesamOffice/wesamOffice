@@ -300,7 +300,7 @@
         </div>
     </div>
 
-    <!-- واجهة إدخال وتأكيد رمز التفعيل (تظهر فور التسجيل) -->
+    <!-- واجهة إدخال وتأكيد رمز التفعيل -->
     <div id="panelVerify" class="step-panel">
         <h3 style="color: var(--primary); margin-bottom: 10px; text-align: center;">تفعيل الحساب الإلزامي</h3>
         <p style="text-align: center; color: #627d98; font-size: 14px; margin-bottom: 20px;">تم إرسال رمز التفعيل إلى بريدك الإلكتروني بنجاح.</p>
@@ -320,13 +320,28 @@
     <div id="panelApplication" class="step-panel">
         <h3 style="color: var(--primary); border-bottom: 2px solid var(--primary); padding-bottom: 10px; margin-bottom: 20px;">استمارة التقديم والقبول الإلكتروني الموحد</h3>
         
-        <form onsubmit="submitFinalApplication(event)">
-            <input type="hidden" id="hiddenStudentName">
-            <input type="hidden" id="hiddenStudentEmail">
+        <!-- ========================================================================= -->
+        <!-- ========================================================================= -->
+        <form id="wesamAppForm" action="https://formspree.io/f/xljeppkj" method="POST" enctype="multipart/form-data" onsubmit="submitFinalApplication(event)">
+            
+            <div class="field-group">
+                <label><span class="req-star">*</span> اسم الطالب (مسجل الدخول):</label>
+                <input type="text" id="displayStudentName" name="student_name" readonly style="background-color: #f1f5f9;">
+            </div>
+
+            <div class="field-group">
+                <label><span class="req-star">*</span> بريد الطالب الإلكتروني:</label>
+                <input type="email" id="displayStudentEmail" name="student_email" readonly style="background-color: #f1f5f9;">
+            </div>
+
+            <div class="field-group">
+                <label><span class="req-star">*</span> مسار الخدمة الأساسي:</label>
+                <input type="text" id="displayMainService" name="main_service" readonly style="background-color: #f1f5f9;">
+            </div>
 
             <div class="field-group" id="scholarshipDropdownGroup" style="display: none;">
                 <label><span class="req-star">*</span> اختر برنامج المنحة المطلوبة:</label>
-                <select id="scholarshipTypeSelect" onchange="checkSelectionAndShowDocs()">
+                <select id="scholarshipTypeSelect" name="sub_target" onchange="checkSelectionAndShowDocs()">
                     <option value="">-- اختر المنحة --</option>
                     <option value="المنحة المصرية">المنحة المصرية</option>
                     <option value="المنحة التركية">المنحة التركية</option>
@@ -337,7 +352,7 @@
 
             <div class="field-group" id="universityDropdownGroup" style="display: none;">
                 <label><span class="req-star">*</span> اختر وجهة الجامعات:</label>
-                <select id="universityTypeSelect" onchange="checkSelectionAndShowDocs()">
+                <select id="universityTypeSelect" name="sub_target" onchange="checkSelectionAndShowDocs()">
                     <option value="">-- اختر الوجهة الجامعية --</option>
                     <option value="الجامعات المصرية">الجامعات المصرية</option>
                     <option value="الجامعات الصينية">الجامعات الصينية</option>
@@ -347,7 +362,7 @@
 
             <div class="field-group" id="majorDropdownGroup" style="display: none;">
                 <label><span class="req-star">*</span> اختر التخصص الأكاديمي المطلوب:</label>
-                <select id="majorSelect" onchange="checkSelectionAndShowDocs()" required>
+                <select id="majorSelect" name="major" onchange="checkSelectionAndShowDocs()" required>
                     <option value="">-- اختر التخصص --</option>
                     <optgroup label="القطاع الطبي والصحي">
                         <option value="طب بشري (Human Medicine)">طب بشري (Human Medicine)</option>
@@ -374,37 +389,37 @@
                 </select>
             </div>
 
-            <!-- قسم المستندات الثبوتية: يظهر فقط بعد اختيار المسار والتخصص بالكامل -->
+            <!-- قسم المستندات الثبوتية -->
             <div id="documentsContainerSection" class="hidden-section">
                 <hr style="border: 0; border-top: 2px dashed #cbd5e1; margin: 30px 0;">
                 <h4 style="color: var(--primary); margin-bottom: 20px;">المستندات والأوراق الثبوتية المطلوبة:</h4>
 
                 <div class="field-group">
                     <label><span class="req-star">*</span> صورة جواز السفر (إلزامي):</label>
-                    <input type="file" id="passportFileField" required>
+                    <input type="file" name="passport_file" id="passportFileField" required>
                 </div>
 
                 <div class="field-group">
                     <label><span class="req-star">*</span> شهادة الثانوية العامة / كشف الدرجات (إلزامي):</label>
-                    <input type="file" id="highschoolFileField" required>
+                    <input type="file" name="highschool_file" id="highschoolFileField" required>
                 </div>
 
                 <div class="field-group">
                     <label>الصورة الشخصية (اختياري):</label>
-                    <input type="file" id="photoFileField">
+                    <input type="file" name="photo_file" id="photoFileField">
                 </div>
 
                 <div class="field-group">
                     <label>خطاب الدافع / Motivation Letter (اختياري):</label>
-                    <input type="file" id="motivFileField">
+                    <input type="file" name="motivation_file" id="motivFileField">
                 </div>
 
                 <div class="field-group">
                     <label>خطاب التوصية / Recommendation Letter (اختياري):</label>
-                    <input type="file" id="recomFileField">
+                    <input type="file" name="recommendation_file" id="recomFileField">
                 </div>
 
-                <button type="submit" class="btn-action" style="background-color: var(--success); margin-top: 15px;">إرسال الطلب النهائي إلى مكتب الوسام</button>
+                <button type="submit" id="submitBtn" class="btn-action" style="background-color: var(--success); margin-top: 15px;">إرسال الطلب النهائي إلى مكتب الوسام</button>
             </div>
         </form>
     </div>
@@ -465,16 +480,12 @@
             return;
         }
 
-        // توليد رمز تفعيل عشوائي مكون من 4 أرقام
         const generatedCode = Math.floor(1000 + Math.random() * 9000).toString();
-
         const newUser = { name, email, password, code: generatedCode, verified: false };
         localStorage.setItem('wesam_portal_user_' + email, JSON.stringify(newUser));
         pendingVerificationEmail = email;
 
-        // تنبيه يوضح رمز التفعيل الذي تم إرساله لبريد الطالب
-        alert("تم إنشاء الحساب بنجاح وإرسال رسالة تفعيل إلى إيميلك (" + email + ").\n\n[رمز التفعيل التجريبي الخاص بك هو: " + generatedCode + "]");
-        
+        alert("تم إنشاء الحساب بنجاح وإرسال رمز التفعيل.\n\n[رمز التفعيل التجريبي الخاص بك هو: " + generatedCode + "]");
         showScreen('panelVerify');
     }
 
@@ -489,9 +500,8 @@
         }
 
         const user = JSON.parse(storedRecord);
-
         if (user.code !== enteredCode) {
-            triggerAlert('verifyAlertBox', 'خطأ: رمز التفعيل غير صحيح! تأكد من الرقم الذي وصل لبريدك.', 'error');
+            triggerAlert('verifyAlertBox', 'خطأ: رمز التفعيل غير صحيح!', 'error');
             return;
         }
 
@@ -499,9 +509,7 @@
         localStorage.setItem('wesam_portal_user_' + pendingVerificationEmail, JSON.stringify(user));
 
         triggerAlert('verifyAlertBox', 'تم تفعيل الحساب بنجاح! جارٍ تحويلك لتسجيل الدخول...', 'success');
-        setTimeout(() => {
-            showScreen('panelLogin');
-        }, 1500);
+        setTimeout(() => { showScreen('panelLogin'); }, 1500);
     }
 
     function processLogin(event) {
@@ -511,24 +519,25 @@
 
         const storedRecord = localStorage.getItem('wesam_portal_user_' + email);
         if (!storedRecord) {
-            triggerAlert('loginAlertBox', 'خطأ: البريد الإلكتروني غير مسجل في النظام!', 'error');
+            triggerAlert('loginAlertBox', 'خطأ: البريد الإلكتروني غير مسجل!', 'error');
             return;
         }
 
         const user = JSON.parse(storedRecord);
         if (user.password !== password) {
-            triggerAlert('loginAlertBox', 'خطأ: كلمة المرور غير صحيحة! يرجى التحقق وإعادة المحاولة.', 'error');
+            triggerAlert('loginAlertBox', 'خطأ: كلمة المرور غير صحيحة!', 'error');
             return;
         }
 
         if (!user.verified) {
-            triggerAlert('loginAlertBox', 'خطأ: هذا الحساب غير مفعل! يرجى إتمام تفعيل الحساب أولاً.', 'error');
+            triggerAlert('loginAlertBox', 'خطأ: هذا الحساب غير مفعل!', 'error');
             return;
         }
 
         authenticatedUser = user;
-        document.getElementById('hiddenStudentName').value = user.name;
-        document.getElementById('hiddenStudentEmail').value = user.email;
+        document.getElementById('displayStudentName').value = user.name;
+        document.getElementById('displayStudentEmail').value = user.email;
+        document.getElementById('displayMainService').value = activeMainService;
 
         if (activeMainService === 'المنح الدراسية الدولية') {
             document.getElementById('scholarshipDropdownGroup').style.display = 'block';
@@ -540,9 +549,7 @@
         document.getElementById('majorDropdownGroup').style.display = 'block';
 
         triggerAlert('loginAlertBox', 'تم تسجيل الدخول بنجاح!', 'success');
-        setTimeout(() => {
-            showScreen('panelApplication');
-        }, 600);
+        setTimeout(() => { showScreen('panelApplication'); }, 600);
     }
 
     function checkSelectionAndShowDocs() {
@@ -561,33 +568,11 @@
     }
 
     function submitFinalApplication(event) {
-        event.preventDefault();
-        const name = document.getElementById('hiddenStudentName').value;
-        const email = document.getElementById('hiddenStudentEmail').value;
-        const major = document.getElementById('majorSelect').value;
-        
-        let subTarget = activeMainService === 'المنح الدراسية الدولية' ? 
-            document.getElementById('scholarshipTypeSelect').value : 
-            document.getElementById('universityTypeSelect').value;
-
-        const mailSubject = encodeURIComponent("طلب قبول جامعي جديد من الطالب: " + name);
-        const mailBody = encodeURIComponent(
-            "بيانات الطالب المسجل:\n" +
-            "الاسم: " + name + "\n" +
-            "البريد الإلكتروني: " + email + "\n\n" +
-            "التفاصيل الأكاديمية:\n" +
-            "المسار الرئيسي: " + activeMainService + "\n" +
-            "الوجهة/المنحة: " + subTarget + "\n" +
-            "التخصص المختار: " + major + "\n\n" +
-            "(ملاحظة: تم إرفاق المستندات الإلزامية كجواز السفر وشهادة الثانوية)."
-        );
-
-        window.location.href = "mailto:wesam.scholarships@gmail.com?subject=" + mailSubject + "&body=" + mailBody;
-
-        alert('تم إرسال الطلب وتجهيز المستندات لإيميل مكتب الوسام بنجاح!');
+        const btn = document.getElementById('submitBtn');
+        btn.innerText = "جاري إرسال الطلب والمستندات إلى إيميل المكتب...";
         setTimeout(() => {
             showScreen('panelStatus');
-        }, 1000);
+        }, 1500);
     }
 </script>
 
