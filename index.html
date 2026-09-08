@@ -300,7 +300,7 @@
         </div>
     </div>
 
-    <!-- واجهة إدخال وتأكيد رمز التفعيل -->
+    <!-- واجهة إدخال وتأكيد رمز التفعيل (تظهر فور التسجيل) -->
     <div id="panelVerify" class="step-panel">
         <h3 style="color: var(--primary); margin-bottom: 10px; text-align: center;">تفعيل الحساب الإلزامي</h3>
         <p style="text-align: center; color: #627d98; font-size: 14px; margin-bottom: 20px;">تم إرسال رمز التفعيل إلى بريدك الإلكتروني بنجاح.</p>
@@ -316,32 +316,18 @@
         </form>
     </div>
 
-    <!-- 3. استمارة التقديم الشاملة -->
+    <!-- 3. استمارة التقديم الشاملة (مرتبطة بـ Formspree) -->
     <div id="panelApplication" class="step-panel">
         <h3 style="color: var(--primary); border-bottom: 2px solid var(--primary); padding-bottom: 10px; margin-bottom: 20px;">استمارة التقديم والقبول الإلكتروني الموحد</h3>
         
-        <!-- ========================================================================= -->
-        <!-- ========================================================================= -->
-        <form id="wesamAppForm" action="https://formspree.io/f/xljeppkj" method="POST" enctype="multipart/form-data" onsubmit="submitFinalApplication(event)">
-            
-            <div class="field-group">
-                <label><span class="req-star">*</span> اسم الطالب (مسجل الدخول):</label>
-                <input type="text" id="displayStudentName" name="student_name" readonly style="background-color: #f1f5f9;">
-            </div>
-
-            <div class="field-group">
-                <label><span class="req-star">*</span> بريد الطالب الإلكتروني:</label>
-                <input type="email" id="displayStudentEmail" name="student_email" readonly style="background-color: #f1f5f9;">
-            </div>
-
-            <div class="field-group">
-                <label><span class="req-star">*</span> مسار الخدمة الأساسي:</label>
-                <input type="text" id="displayMainService" name="main_service" readonly style="background-color: #f1f5f9;">
-            </div>
+        <form action="https://formspree.io/f/xlJeppkJ" method="POST" enctype="multipart/form-data" onsubmit="submitFinalApplication(event)">
+            <input type="hidden" name="student_name" id="hiddenStudentName">
+            <input type="hidden" name="student_email" id="hiddenStudentEmail">
+            <input type="hidden" name="main_service" id="hiddenMainService">
 
             <div class="field-group" id="scholarshipDropdownGroup" style="display: none;">
                 <label><span class="req-star">*</span> اختر برنامج المنحة المطلوبة:</label>
-                <select id="scholarshipTypeSelect" name="sub_target" onchange="checkSelectionAndShowDocs()">
+                <select name="scholarship_type" id="scholarshipTypeSelect" onchange="checkSelectionAndShowDocs()">
                     <option value="">-- اختر المنحة --</option>
                     <option value="المنحة المصرية">المنحة المصرية</option>
                     <option value="المنحة التركية">المنحة التركية</option>
@@ -352,7 +338,7 @@
 
             <div class="field-group" id="universityDropdownGroup" style="display: none;">
                 <label><span class="req-star">*</span> اختر وجهة الجامعات:</label>
-                <select id="universityTypeSelect" name="sub_target" onchange="checkSelectionAndShowDocs()">
+                <select name="university_type" id="universityTypeSelect" onchange="checkSelectionAndShowDocs()">
                     <option value="">-- اختر الوجهة الجامعية --</option>
                     <option value="الجامعات المصرية">الجامعات المصرية</option>
                     <option value="الجامعات الصينية">الجامعات الصينية</option>
@@ -362,7 +348,7 @@
 
             <div class="field-group" id="majorDropdownGroup" style="display: none;">
                 <label><span class="req-star">*</span> اختر التخصص الأكاديمي المطلوب:</label>
-                <select id="majorSelect" name="major" onchange="checkSelectionAndShowDocs()" required>
+                <select name="academic_major" id="majorSelect" onchange="checkSelectionAndShowDocs()" required>
                     <option value="">-- اختر التخصص --</option>
                     <optgroup label="القطاع الطبي والصحي">
                         <option value="طب بشري (Human Medicine)">طب بشري (Human Medicine)</option>
@@ -389,7 +375,7 @@
                 </select>
             </div>
 
-            <!-- قسم المستندات الثبوتية -->
+            <!-- قسم المستندات الثبوتية: يظهر فقط بعد اختيار المسار والتخصص بالكامل -->
             <div id="documentsContainerSection" class="hidden-section">
                 <hr style="border: 0; border-top: 2px dashed #cbd5e1; margin: 30px 0;">
                 <h4 style="color: var(--primary); margin-bottom: 20px;">المستندات والأوراق الثبوتية المطلوبة:</h4>
@@ -406,20 +392,20 @@
 
                 <div class="field-group">
                     <label>الصورة الشخصية (اختياري):</label>
-                    <input type="file" name="photo_file" id="photoFileField">
+                    <input type="file" name="personal_photo" id="photoFileField">
                 </div>
 
                 <div class="field-group">
                     <label>خطاب الدافع / Motivation Letter (اختياري):</label>
-                    <input type="file" name="motivation_file" id="motivFileField">
+                    <input type="file" name="motivation_letter" id="motivFileField">
                 </div>
 
                 <div class="field-group">
                     <label>خطاب التوصية / Recommendation Letter (اختياري):</label>
-                    <input type="file" name="recommendation_file" id="recomFileField">
+                    <input type="file" name="recommendation_letter" id="recomFileField">
                 </div>
 
-                <button type="submit" id="submitBtn" class="btn-action" style="background-color: var(--success); margin-top: 15px;">إرسال الطلب النهائي إلى مكتب الوسام</button>
+                <button type="submit" class="btn-action" style="background-color: var(--success); margin-top: 15px;">إرسال الطلب النهائي إلى مكتب الوسام</button>
             </div>
         </form>
     </div>
@@ -466,6 +452,7 @@
     function chooseMainService(serviceType) {
         activeMainService = serviceType;
         document.getElementById('authChoiceHeading').innerText = "المسار المحدد: " + serviceType;
+        document.getElementById('hiddenMainService').value = serviceType;
         showScreen('panelAuthChoice');
     }
 
@@ -485,7 +472,7 @@
         localStorage.setItem('wesam_portal_user_' + email, JSON.stringify(newUser));
         pendingVerificationEmail = email;
 
-        alert("تم إنشاء الحساب بنجاح وإرسال رمز التفعيل.\n\n[رمز التفعيل التجريبي الخاص بك هو: " + generatedCode + "]");
+        alert("تم إنشاء الحساب بنجاح وإرسال رسالة تفعيل إلى إيميلك (" + email + ").\n\n[رمز التفعيل التجريبي الخاص بك هو: " + generatedCode + "]");
         showScreen('panelVerify');
     }
 
@@ -501,7 +488,7 @@
 
         const user = JSON.parse(storedRecord);
         if (user.code !== enteredCode) {
-            triggerAlert('verifyAlertBox', 'خطأ: رمز التفعيل غير صحيح!', 'error');
+            triggerAlert('verifyAlertBox', 'خطأ: رمز التفعيل غير صحيح! تأكد من الرقم الذي وصل لبريدك.', 'error');
             return;
         }
 
@@ -509,7 +496,9 @@
         localStorage.setItem('wesam_portal_user_' + pendingVerificationEmail, JSON.stringify(user));
 
         triggerAlert('verifyAlertBox', 'تم تفعيل الحساب بنجاح! جارٍ تحويلك لتسجيل الدخول...', 'success');
-        setTimeout(() => { showScreen('panelLogin'); }, 1500);
+        setTimeout(() => {
+            showScreen('panelLogin');
+        }, 1500);
     }
 
     function processLogin(event) {
@@ -519,25 +508,24 @@
 
         const storedRecord = localStorage.getItem('wesam_portal_user_' + email);
         if (!storedRecord) {
-            triggerAlert('loginAlertBox', 'خطأ: البريد الإلكتروني غير مسجل!', 'error');
+            triggerAlert('loginAlertBox', 'خطأ: البريد الإلكتروني غير مسجل في النظام!', 'error');
             return;
         }
 
         const user = JSON.parse(storedRecord);
         if (user.password !== password) {
-            triggerAlert('loginAlertBox', 'خطأ: كلمة المرور غير صحيحة!', 'error');
+            triggerAlert('loginAlertBox', 'خطأ: كلمة المرور غير صحيحة! يرجى التحقق وإعادة المحاولة.', 'error');
             return;
         }
 
         if (!user.verified) {
-            triggerAlert('loginAlertBox', 'خطأ: هذا الحساب غير مفعل!', 'error');
+            triggerAlert('loginAlertBox', 'خطأ: هذا الحساب غير مفعل! يرجى إتمام تفعيل الحساب أولاً.', 'error');
             return;
         }
 
         authenticatedUser = user;
-        document.getElementById('displayStudentName').value = user.name;
-        document.getElementById('displayStudentEmail').value = user.email;
-        document.getElementById('displayMainService').value = activeMainService;
+        document.getElementById('hiddenStudentName').value = user.name;
+        document.getElementById('hiddenStudentEmail').value = user.email;
 
         if (activeMainService === 'المنح الدراسية الدولية') {
             document.getElementById('scholarshipDropdownGroup').style.display = 'block';
@@ -549,7 +537,9 @@
         document.getElementById('majorDropdownGroup').style.display = 'block';
 
         triggerAlert('loginAlertBox', 'تم تسجيل الدخول بنجاح!', 'success');
-        setTimeout(() => { showScreen('panelApplication'); }, 600);
+        setTimeout(() => {
+            showScreen('panelApplication');
+        }, 600);
     }
 
     function checkSelectionAndShowDocs() {
@@ -567,12 +557,37 @@
         }
     }
 
-    function submitFinalApplication(event) {
-        const btn = document.getElementById('submitBtn');
-        btn.innerText = "جاري إرسال الطلب والمستندات إلى إيميل المكتب...";
-        setTimeout(() => {
-            showScreen('panelStatus');
-        }, 1500);
+    // دالة الإرسال عبر Formspree تلقائياً بدون بريد خارجي
+    async function submitFinalApplication(event) {
+        event.preventDefault();
+        const formElement = event.target;
+        const formData = new FormData(formElement);
+
+        const submitButton = formElement.querySelector('button[type="submit"]');
+        submitButton.innerText = "جاري إرسال الطلب والمستندات...";
+        submitButton.disabled = true;
+
+        try {
+            const response = await fetch(formElement.action, {
+                method: 'POST',
+                body: formData,
+                headers: {
+                    'Accept': 'application/json'
+                }
+            });
+
+            if (response.ok) {
+                showScreen('panelStatus');
+            } else {
+                alert('حدث خطأ أثناء إرسال الطلب، يرجى المحاولة مرة أخرى.');
+                submitButton.innerText = "إرسال الطلب النهائي إلى مكتب الوسام";
+                submitButton.disabled = false;
+            }
+        } catch (error) {
+            alert('تعذر الاتصال بالخادم، تأكد من اتصالك بالإنترنت.');
+            submitButton.innerText = "إرسال الطلب النهائي إلى مكتب الوسام";
+            submitButton.disabled = false;
+        }
     }
 </script>
 
