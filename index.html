@@ -316,11 +316,15 @@
         </form>
     </div>
 
-    <!-- 3. استمارة التقديم الشاملة (مرتبطة بـ Formspree) -->
+    <!-- 3. استمارة التقديم الشاملة (مكان وضع الرابط الخاص بك هنا) -->
     <div id="panelApplication" class="step-panel">
         <h3 style="color: var(--primary); border-bottom: 2px solid var(--primary); padding-bottom: 10px; margin-bottom: 20px;">استمارة التقديم والقبول الإلكتروني الموحد</h3>
         
-        <form action="https://formspree.io/f/xlJeppkJ" method="POST" enctype="multipart/form-data" onsubmit="submitFinalApplication(event)">
+        <!-- ========================================== -->
+        <!-- ضع رابط النموذج الخاص بك بين علامتي التنصيص أدناه -->
+        <!-- ========================================== -->
+        <form action="https://docs.google.com/forms/d/e/1FAIpQLSfXbJm8D4Dg4MIg9VrAw7PPGVcnwzRWz-U74Nx51JKosDG_rw/viewform?usp=header" method="POST" enctype="multipart/form-data" onsubmit="submitFinalApplication(event)">
+            
             <input type="hidden" name="student_name" id="hiddenStudentName">
             <input type="hidden" name="student_email" id="hiddenStudentEmail">
             <input type="hidden" name="main_service" id="hiddenMainService">
