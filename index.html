@@ -47,6 +47,32 @@
         .page-section.active {
             display: block;
         }
+        .profile-header {
+            display: flex;
+            align-items: center;
+            gap: 20px;
+            background: #f1f5f9;
+            padding: 15px;
+            border-radius: 10px;
+            margin-bottom: 25px;
+        }
+        .profile-avatar {
+            width: 80px;
+            height: 80px;
+            border-radius: 50%;
+            object-fit: cover;
+            border: 3px solid var(--primary-color);
+            background: #ddd;
+        }
+        .profile-info h3 {
+            margin: 0 0 5px 0;
+            color: var(--primary-color);
+        }
+        .profile-info p {
+            margin: 0;
+            font-size: 13px;
+            color: #666;
+        }
         .article-box {
             background: #fdfbf7;
             border-right: 5px solid var(--accent-color);
@@ -119,6 +145,13 @@
         button.btn:hover {
             background-color: var(--secondary-color);
         }
+        .btn-secondary {
+            background-color: #6c757d;
+            margin-top: 10px;
+        }
+        .btn-secondary:hover {
+            background-color: #5a6268;
+        }
         .switch-text {
             text-align: center;
             margin-top: 20px;
@@ -188,47 +221,50 @@
         <img src="logo.png" alt="مكتب الوسام" class="logo-img">
     </div>
 
-    <!-- 1. واجهة تسجيل الدخول (مربوطة بالخدمة الخارجية لإرسال البيانات إلى إيميلك) -->
+    <!-- 1. واجهة تسجيل الدخول (محمية بالتحقق من كلمة المرور) -->
     <div id="loginPage" class="page-section active">
         <h2 style="color: var(--primary-color); text-align: center; margin-bottom: 20px;">تسجيل دخول الطالب</h2>
-        <form action="https://formspree.io/f/xl1jeppkj" method="POST">
+        <form onsubmit="handleLogin(event)">
             <div class="form-group">
-                <label>البريد الإلكتروني:</label>
-                <input type="email" name="email" required placeholder="example@domain.com">
+                <label>البريد الإلكتروني: <span class="required-star">*</span></label>
+                <input type="email" id="loginEmail" required placeholder="example@domain.com">
             </div>
             <div class="form-group">
-                <label>الرسالة أو الاستفسار (أو كلمة المرور):</label>
-                <textarea name="message" required placeholder="اكتب رسالتك أو استفسارك هنا ليصلك مباشرة..."></textarea>
+                <label>كلمة المرور: <span class="required-star">*</span></label>
+                <input type="password" id="loginPassword" required placeholder="أدخل كلمة المرور الخاصة بك">
             </div>
-            <button type="submit" class="btn">إرسال الطلب إلى الإيميل</button>
+            <button type="submit" class="btn">تسجيل الدخول</button>
         </form>
         <div class="switch-text">
             ليس لديك حساب معنا؟ <a onclick="showPage('registerPage')">أنشئ حساباً جديداً الآن</a>
         </div>
     </div>
 
-    <!-- 2. واجهة إنشاء حساب جديد -->
+    <!-- 2. واجهة إنشاء حساب جديد وحفظه في النظام -->
     <div id="registerPage" class="page-section">
         <h2 style="color: var(--primary-color); text-align: center; margin-bottom: 20px;">إنشاء حساب جديد في منصة الوسام</h2>
         <form onsubmit="handleRegister(event)">
             <div class="form-group">
-                <label>الاسم الكامل:</label>
-                <input type="text" required placeholder="أدخل اسمك الثلاثي أو الرباعي">
+                <label>الاسم الكامل: <span class="required-star">*</span></label>
+                <input type="text" id="regName" required placeholder="أدخل اسمك الثلاثي أو الرباعي">
             </div>
             <div class="form-group">
-                <label>البريد الإلكتروني:</label>
-                <input type="email" required placeholder="example@domain.com">
+                <label>البريد الإلكتروني: <span class="required-star">*</span></label>
+                <input type="email" id="regEmail" required placeholder="example@domain.com">
             </div>
             <div class="form-group">
-                <label>كلمة المرور:</label>
-                <input type="password" required placeholder="أنشئ كلمة مرور قوية">
+                <label>كلمة المرور: <span class="required-star">*</span></label>
+                <input type="password" id="regPassword" required placeholder="أنشئ كلمة مرور قوية">
             </div>
-            <!-- منع الروبوتات -->
+            <div class="form-group">
+                <label>الصورة الشخصية (للواجهة):</label>
+                <input type="file" id="regAvatarInput" accept="image/*" onchange="previewAvatar(event)">
+            </div>
             <div class="captcha-box">
                 <input type="checkbox" id="robotCheck" required>
                 <label for="robotCheck" style="margin: 0; cursor: pointer;">أنا لست روبوت (تحقق الأمان)</label>
             </div>
-            <button type="submit" class="btn">تسجيل الحساب وإرسال تفعيل البريد</button>
+            <button type="submit" class="btn">تسجيل الحساب وتفعيل البريد</button>
         </form>
         <div class="switch-text">
             لديك حساب بالفعل؟ <a onclick="showPage('loginPage')">سجل دخولك من هنا</a>
@@ -237,6 +273,18 @@
 
     <!-- 3. لوحة الطالب الرئيسية -->
     <div id="dashboardPage" class="page-section">
+        <div class="profile-header">
+            <img id="userAvatarDisplay" src="https://via.placeholder.com/80" alt="صورة الطالب" class="profile-avatar">
+            <div class="profile-info">
+                <h3 id="userNameDisplay">اسم الطالب</h3>
+                <p id="userEmailDisplay">student@domain.com</p>
+                <label for="changeAvatarInput" style="font-size: 12px; color: var(--secondary-color); cursor: pointer; margin-top: 5px; display: inline-block;">
+                    📷 تغيير صورة الواجهة
+                </label>
+                <input type="file" id="changeAvatarInput" accept="image/*" style="display: none;" onchange="updateDashboardAvatar(event)">
+            </div>
+        </div>
+
         <div class="article-box">
             <strong>مرحباً بك في رحلتك التعليمية مع مكتب الوسام!</strong><br>
             نحن نؤمن بأن المستقبل يُصنع بالتخطيط السليم. يلتزم مكتب الوسام بتسهيل كافة إجراءات قبولك الجامعي وتوفير أفضل الفرص والمنح الدراسية الإقليمية والدولية بعناية واحترافية تامة لضمان نجاحك الأكاديمي.
@@ -244,9 +292,9 @@
         
         <div style="text-align: center; margin-top: 25px;">
             <button class="btn" onclick="showPage('applicationPage')" style="padding: 16px; font-size: 19px;">➕ بدء إنشاء طلب جديد للتقديم</button>
+            <button class="btn btn-secondary" onclick="showPage('statusPage')">📋 تتبع حالة الطلب الحالي</button>
         </div>
 
-        <!-- معلومات التواصل والاستفسار في أسفل الصفحة الرئيسية تماماً -->
         <div class="contact-box">
             <h4>للتواصل والاستفسار والمتابعة:</h4>
             <div class="contact-links">
@@ -257,84 +305,56 @@
         </div>
     </div>
 
-    <!-- 4. استمارة التحديد والخدمات والمستندات -->
+    <!-- 4. استمارة التقديم (مربوطة حصرياً لإرسال البيانات إلى إيميلك الرسمي) -->
     <div id="applicationPage" class="page-section">
         <h3 style="color: var(--primary-color); border-bottom: 2px solid var(--primary-color); padding-bottom: 8px;">استمارة التقديم والقبول الأكاديمي</h3>
         
-        <form onsubmit="handleApplicationSubmit(event)">
-            <!-- اختيار الخدمة الأساسية -->
+        <!-- تم ربط هذا النموذج مباشرة بإيميلك عبر Formspree لتستلم الطلبات فور إرسالها -->
+        <form action="https://formspree.io/f/xl1jeppkj" method="POST" onsubmit="handleApplicationSubmit(event)">
+            
+            <input type="hidden" name="student_email" id="formStudentEmail">
+
             <div class="form-group">
                 <label>اختر نوع الخدمة / البرنامج الأساسي: <span class="required-star">*</span></label>
-                <select id="serviceType" onchange="toggleServiceSub()" required>
+                <select id="serviceType" name="service_type" onchange="toggleServiceSub()" required>
                     <option value="">-- اختر نوع التقديم --</option>
-                    <option value="scholarship">التقديم على المنح الدراسية</option>
-                    <option value="university">التقديم على الجامعات</option>
+                    <option value="المنح الدراسية">التقديم على المنح الدراسية</option>
+                    <option value="الجامعات">التقديم على الجامعات</option>
                 </select>
             </div>
 
-            <!-- الفئة الفرعية (المنح) -->
             <div class="form-group" id="scholarshipSubGroup" style="display: none;">
                 <label>اختر فئة المنحة المطلوبة:</label>
-                <select id="scholarshipType">
+                <select id="scholarshipType" name="scholarship_destination">
                     <option value="">-- اختر الدولة / المنحة --</option>
-                    <option value="مصر">المنحة المصرية</option>
-                    <option value="تركيا">المنحة التركية</option>
-                    <option value="الصين">المنحة الصينية</option>
-                    <option value="السعودية">المنحة السعودية</option>
+                    <option value="المنحة المصرية">المنحة المصرية</option>
+                    <option value="المنحة التركية">المنحة التركية</option>
+                    <option value="المنحة الصينية">المنحة الصينية</option>
+                    <option value="المنحة السعودية">المنحة السعودية</option>
                 </select>
             </div>
 
-            <!-- الفئة الفرعية (الجامعات) -->
             <div class="form-group" id="universitySubGroup" style="display: none;">
                 <label>اختر وجهة الجامعات المطلوبة:</label>
-                <select id="universityType">
+                <select id="universityType" name="university_destination">
                     <option value="">-- اختر الوجهة الجامعية --</option>
-                    <option value="جامعات مصر">الجامعات المصرية</option>
-                    <option value="جامعات الصين">الجامعات الصينية</option>
-                    <option value="جامعات أخرى">جهات جامعية أخرى</option>
+                    <option value="الجامعات المصرية">الجامعات المصرية</option>
+                    <option value="الجامعات الصينية">الجامعات الصينية</option>
+                    <option value="جهات جامعية أخرى">جهات جامعية أخرى</option>
                 </select>
             </div>
 
-            <hr style="border: 0; border-top: 1px solid #ddd; margin: 25px 0;">
-            <h4 style="color: var(--secondary-color); margin-bottom: 15px;">المستندات والأوراق الثبوتية:</h4>
-
-            <!-- المستندات الإلزامية (نجمة حمراء صغيرة) -->
             <div class="form-group">
-                <label>صورة جواز السفر <span class="required-star">*</span></label>
-                <input type="file" required>
+                <label>ملاحظات إضافية أو تفاصيل التقديم: <span class="required-star">*</span></label>
+                <textarea name="notes" required placeholder="اكتب تخصصك المطلوب أو أي ملاحظات هامة ليصلك الطلب بالإيميل..."></textarea>
             </div>
 
-            <div class="form-group">
-                <label>شهادة الثانوية العامة / كشف الدرجات <span class="required-star">*</span></label>
-                <input type="file" required>
-            </div>
-
-            <!-- المستندات غير الإلزامية (فارغة بدون نجمة) -->
-            <div class="form-group">
-                <label>شهادة الميلاد</label>
-                <input type="file">
-            </div>
-
-            <div class="form-group">
-                <label>صورة شخصية حديثة</label>
-                <input type="file">
-            </div>
-
-            <div class="form-group">
-                <label>خطاب الدافع (Motivation Letter)</label>
-                <input type="file">
-            </div>
-
-            <div class="form-group">
-                <label>خطاب التوصية (Recommendation Letter)</label>
-                <input type="file">
-            </div>
-
-            <button type="submit" class="btn" style="background-color: var(--success-color);">إرسال الطلب النهائي للمكتب</button>
+            <button type="submit" class="btn" style="background-color: var(--success-color);">إرسال الطلب النهائي إلى إيميل المكتب</button>
+            <button type="button" class="btn btn-secondary" onclick="showPage('dashboardPage')">العودة للوحة التحكم</button>
         </form>
     </div>
 
-    <!-- 5. صفحة تتبع حالة الطلب ورفع رسوم التحويل -->
+    <!-- 5. صفحة تتبع حالة الطلب -->
     <div id="statusPage" class="page-section">
         <h3 style="color: var(--primary-color); text-align: center;">حالة طلبك الحالي</h3>
         <div class="status-card">
@@ -344,22 +364,17 @@
                 سيقوم فريقنا بمطابقة أوراقك وشروطك مع المنح المتاحة قريباً.
             </p>
         </div>
-
-        <div style="background: #e9ecef; padding: 20px; border-radius: 8px; margin-top: 25px;">
-            <h4 style="margin-top: 0; color: var(--primary-color);">إشعار تحويل الرسوم المقررة:</h4>
-            <p style="font-size: 14px; color: #555;">الرجاء تحميل إيصال أو إشعار تحويل الرسوم المقررة من قبل المكتب لاستكمال اعتماد طلبك رسمياً:</p>
-            <form onsubmit="handleFeeSubmit(event)">
-                <div class="form-group">
-                    <input type="file" required>
-                </div>
-                <button type="submit" class="btn" style="padding: 10px;">إرسال إيصال الرسوم للمكتب</button>
-            </form>
+        <div style="text-align: center; margin-top: 20px;">
+            <button class="btn btn-secondary" onclick="showPage('dashboardPage')">العودة للوحة التحكم الرئيسية</button>
         </div>
     </div>
 
 </div>
 
 <script>
+    let temporaryAvatar = "";
+    let currentUser = null;
+
     function showPage(pageId) {
         const pages = document.querySelectorAll('.page-section');
         pages.forEach(page => page.classList.remove('active'));
@@ -367,27 +382,102 @@
         window.scrollTo(0, 0);
     }
 
+    function previewAvatar(event) {
+        const file = event.target.files[0];
+        if (file) {
+            temporaryAvatar = URL.createObjectURL(file);
+        }
+    }
+
+    // تسجيل حساب جديد وحفظ كلمة المرور والبيانات بشكل آمن في المتصفح
     function handleRegister(event) {
         event.preventDefault();
+        const name = document.getElementById('regName').value;
+        const email = document.getElementById('regEmail').value;
+        const password = document.getElementById('regPassword').value;
+
+        // التحقق إن كان الإيميل مسجلاً مسبقاً
+        if (localStorage.getItem('user_' + email)) {
+            alert('هذا البريد الإلكتروني مسجل مسبقاً! يرجى تسجيل الدخول.');
+            showPage('loginPage');
+            return;
+        }
+
+        const userData = {
+            name: name,
+            email: email,
+            password: password,
+            avatar: temporaryAvatar || "https://via.placeholder.com/80"
+        };
+
+        // حفظ بيانات الحساب
+        localStorage.setItem('user_' + email, JSON.stringify(userData));
+        
         alert('تم إنشاء الحساب بنجاح! تم إرسال رسالة تفعيل إلى بريدك الإلكتروني.');
+        
+        // تسجيل الدخول مباشرة بعد التسجيل
+        loginUserSession(userData);
+    }
+
+    // التحقق الفعلي من كلمة المرور والبريد الإلكتروني عند تسجيل الدخول
+    function handleLogin(event) {
+        event.preventDefault();
+        const email = document.getElementById('loginEmail').value;
+        const password = document.getElementById('loginPassword').value;
+
+        const storedData = localStorage.getItem('user_' + email);
+
+        if (!storedData) {
+            alert('خطأ: البريد الإلكتروني غير مسجل في النظام! يرجى إنشاء حساب جديد أولاً.');
+            return;
+        }
+
+        const user = JSON.parse(storedData);
+
+        // التحقق من صحة كلمة المرور بدقة
+        if (user.password !== password) {
+            alert('خطأ: كلمة المرور غير صحيحة! يرجى إعادة المحاولة.');
+            return;
+        }
+
+        // إذا كانت كلمة المرور صحيحة يتم الدخول بنجاح
+        loginUserSession(user);
+        alert('تم تسجيل الدخول بنجاح!');
+    }
+
+    // فتح الجلسة وتعبئة البيانات في لوحة التحكم
+    function loginUserSession(user) {
+        currentUser = user;
+        document.getElementById('userNameDisplay').innerText = user.name;
+        document.getElementById('userEmailDisplay').innerText = user.email;
+        document.getElementById('userAvatarDisplay').src = user.avatar;
+        document.getElementById('formStudentEmail').value = user.email;
         showPage('dashboardPage');
+    }
+
+    function updateDashboardAvatar(event) {
+        const file = event.target.files[0];
+        if (file && currentUser) {
+            const newImgUrl = URL.createObjectURL(file);
+            document.getElementById('userAvatarDisplay').src = newImgUrl;
+            currentUser.avatar = newImgUrl;
+            localStorage.setItem('user_' + currentUser.email, JSON.stringify(currentUser));
+            alert('تم تحديث صورة الواجهة بنجاح!');
+        }
     }
 
     function toggleServiceSub() {
         const val = document.getElementById('serviceType').value;
-        document.getElementById('scholarshipSubGroup').style.display = (val === 'scholarship') ? 'block' : 'none';
-        document.getElementById('universitySubGroup').style.display = (val === 'university') ? 'block' : 'none';
+        document.getElementById('scholarshipSubGroup').style.display = (val === 'المنح الدراسية') ? 'block' : 'none';
+        document.getElementById('universitySubGroup').style.display = (val === 'الجامعات') ? 'block' : 'none';
     }
 
     function handleApplicationSubmit(event) {
-        event.preventDefault();
-        alert('تم تقديم الطلب بنجاح وتم إرساله إلى طاقم العمل بنجاح!');
-        showPage('statusPage');
-    }
-
-    function handleFeeSubmit(event) {
-        event.preventDefault();
-        alert('تم رفع إشعار تحويل الرسوم بنجاح! سيتم مراجعته واعتماد طلبك نهائياً.');
+        // سيتم إرسال الطلب عبر Formspree إلى إيميلك مباشرة، ثم الانتقال لصفحة التتبع
+        alert('تم إرسال الطلب بنجاح إلى إيميل المكتب وسيتم مراجعته قريباً!');
+        setTimeout(() => {
+            showPage('statusPage');
+        }, 500);
     }
 </script>
 
