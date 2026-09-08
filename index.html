@@ -3,18 +3,17 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>منصة مكتب الوسام للقبول والمنح الجامعية</title>
+    <title>مكتب الوسام للخدمات التعليمية والمنح الدراسية</title>
     <style>
         :root {
-            --primary: #003366;
-            --secondary: #0055a5;
-            --accent: #d4af37;
-            --bg: #f4f6f9;
-            --text: #2c3e50;
-            --success: #28a745;
-            --danger: #dc3545;
-            --warning: #ffc107;
-            --border: #ced4da;
+            --primary: #102a43;
+            --secondary: #243b53;
+            --accent: #d69e2e;
+            --bg: #f0f4f8;
+            --text: #102a43;
+            --success: #2f855a;
+            --danger: #c53030;
+            --border: #bcccdc;
         }
         body {
             font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
@@ -22,290 +21,312 @@
             margin: 0;
             padding: 20px;
             color: var(--text);
-            line-height: 1.6;
+            line-height: 1.7;
         }
-        .portal-container {
-            max-width: 850px;
+        .main-wrapper {
+            max-width: 900px;
             background: #ffffff;
             margin: 30px auto;
             padding: 40px;
-            border-radius: 12px;
-            box-shadow: 0 5px 25px rgba(0, 0, 0, 0.08);
-            border-top: 6px solid var(--primary);
+            border-radius: 16px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.08);
+            border-top: 8px solid var(--accent);
         }
-        .portal-header {
+        .brand-header {
             text-align: center;
-            margin-bottom: 25px;
+            margin-bottom: 30px;
+            border-bottom: 2px solid #e2e8f0;
+            padding-bottom: 20px;
         }
-        .portal-header img {
-            max-width: 130px;
-            height: auto;
-            border-radius: 8px;
-            margin-bottom: 10px;
-        }
-        .portal-header h2 {
+        .brand-header h1 {
             color: var(--primary);
             margin: 0;
-            font-size: 24px;
+            font-size: 28px;
+            font-weight: 800;
         }
-        .step-view {
+        .brand-header p {
+            color: #627d98;
+            margin: 8px 0 0 0;
+            font-size: 15px;
+            font-weight: 600;
+        }
+        .step-panel {
             display: none;
         }
-        .step-view.active {
+        .step-panel.active {
             display: block;
         }
-        .alert-box {
-            padding: 12px 16px;
-            border-radius: 6px;
+        .msg-alert {
+            padding: 14px 18px;
+            border-radius: 8px;
             margin-bottom: 20px;
             font-size: 14px;
             display: none;
-            font-weight: 500;
+            font-weight: 600;
         }
-        .alert-error {
-            background-color: #f8d7da;
-            color: #721c24;
-            border: 1px solid #f5c6cb;
+        .msg-error {
+            background-color: #fed7d7;
+            color: #9b2c2c;
+            border: 1px solid #feb2b2;
         }
-        .alert-success {
-            background-color: #d4edda;
-            color: #155724;
-            border: 1px solid #c3e6cb;
+        .msg-success {
+            background-color: #c6f6d5;
+            color: #22543d;
+            border: 1px solid #9ae6b4;
         }
-        .form-row {
+        .field-group {
             margin-bottom: 20px;
         }
         label {
             display: block;
             margin-bottom: 8px;
-            font-weight: 600;
+            font-weight: 700;
             font-size: 14px;
-            color: #495057;
+            color: #334e68;
         }
-        .required-star {
+        .req-star {
             color: var(--danger);
             margin-right: 4px;
         }
-        input[type="text"], input[type="email"], input[type="password"], select, textarea {
+        input[type="text"], input[type="email"], input[type="password"], select {
             width: 100%;
-            padding: 12px 15px;
-            border: 1px solid var(--border);
-            border-radius: 6px;
+            padding: 14px;
+            border: 2px solid var(--border);
+            border-radius: 8px;
             box-sizing: border-box;
             font-size: 15px;
             outline: none;
-            transition: all 0.3s ease;
             background-color: #fff;
+            transition: all 0.3s;
         }
-        input:focus, select:focus, textarea:focus {
+        input:focus, select:focus {
             border-color: var(--primary);
-            box-shadow: 0 0 0 3px rgba(0, 51, 102, 0.1);
+            box-shadow: 0 0 0 4px rgba(16, 42, 67, 0.1);
         }
-        textarea {
-            resize: vertical;
-            height: 100px;
-        }
-        .btn-official {
+        .btn-action {
             background-color: var(--primary);
             color: white;
             border: none;
-            padding: 14px 20px;
+            padding: 15px;
             width: 100%;
-            border-radius: 6px;
+            border-radius: 8px;
             font-size: 16px;
             font-weight: bold;
             cursor: pointer;
             transition: background 0.3s;
         }
-        .btn-official:hover {
+        .btn-action:hover {
             background-color: var(--secondary);
         }
-        .btn-alt {
-            background-color: #6c757d;
+        .btn-secondary {
+            background-color: #627d98;
             margin-top: 10px;
         }
-        .btn-alt:hover {
-            background-color: #5a6268;
+        .btn-secondary:hover {
+            background-color: #486581;
         }
-        .service-card {
-            background: #f8f9fa;
-            border: 2px solid #e9ecef;
+        .card-choice {
+            background: #f8fafc;
+            border: 2px solid #cbd5e1;
             padding: 25px;
-            border-radius: 10px;
+            border-radius: 12px;
             text-align: center;
             cursor: pointer;
             transition: all 0.3s;
             margin-bottom: 15px;
         }
-        .service-card:hover {
-            border-color: var(--primary);
-            background: #e7f1ff;
+        .card-choice:hover {
+            border-color: var(--accent);
+            background: #fffbeb;
+            transform: translateY(-2px);
         }
-        .service-card h3 {
+        .card-choice h3 {
             margin: 0 0 8px 0;
             color: var(--primary);
+            font-size: 20px;
         }
-        .switch-link {
+        .navigation-link {
             text-align: center;
             margin-top: 20px;
             font-size: 14px;
-            color: #6c757d;
         }
-        .switch-link a {
+        .navigation-link a {
             color: var(--primary);
             text-decoration: none;
             font-weight: bold;
             cursor: pointer;
         }
-        .switch-link a:hover {
+        .navigation-link a:hover {
             text-decoration: underline;
         }
-        .captcha-box {
-            background: #f9f9f9;
-            border: 1px solid #ddd;
-            padding: 12px;
-            border-radius: 6px;
+        .security-box {
+            background: #f1f5f9;
+            border: 1px solid #cbd5e1;
+            padding: 14px;
+            border-radius: 8px;
             display: flex;
             align-items: center;
-            gap: 10px;
+            gap: 12px;
             margin-bottom: 20px;
         }
-        .status-box {
-            background: #fff3cd;
-            border: 1px solid #ffeeba;
-            padding: 25px;
-            border-radius: 8px;
+        .status-box-view {
+            background: #fffbeb;
+            border: 2px solid var(--accent);
+            padding: 30px;
+            border-radius: 12px;
             text-align: center;
         }
-        .status-tag {
+        .status-badge {
             display: inline-block;
-            background: var(--warning);
-            color: #856404;
-            padding: 6px 16px;
-            border-radius: 20px;
+            background-color: var(--accent);
+            color: #78350f;
+            padding: 8px 20px;
+            border-radius: 30px;
             font-weight: bold;
-            margin-top: 10px;
-            font-size: 14px;
+            margin-top: 15px;
+            font-size: 15px;
         }
-        .social-footer {
-            margin-top: 40px;
-            padding-top: 20px;
-            border-top: 1px solid #dee2e6;
+        .social-links-footer {
+            margin-top: 45px;
+            padding-top: 25px;
+            border-top: 2px solid #e2e8f0;
             text-align: center;
         }
-        .social-footer a {
+        .social-links-footer p {
+            margin: 0 0 12px 0;
+            font-size: 14px;
+            font-weight: 700;
+            color: #486581;
+        }
+        .social-links-footer a {
             display: inline-block;
-            margin: 0 10px;
+            margin: 0 8px;
             color: white;
-            padding: 8px 16px;
-            border-radius: 4px;
+            padding: 10px 20px;
+            border-radius: 6px;
             text-decoration: none;
             font-size: 14px;
             font-weight: bold;
         }
         .fb-btn { background-color: #1877f2; }
         .tiktok-btn { background-color: #000000; }
+        .hidden-section {
+            display: none;
+        }
     </style>
 </head>
 <body>
 
-<div class="portal-container">
-    <!-- الشعار الرسمي للمكتب -->
-    <div class="portal-header">
-        <img src="logo.png" alt="شعار مكتب الوسام" onerror="this.style.display='none'">
-        <h2>منصة مكتب الوسام للقبول والمنح الجامعية</h2>
-        <p style="margin: 5px 0 0 0; color: #6c757d; font-size: 13px;">بوابة التقديم الإلكتروني الموحد</p>
+<div class="main-wrapper">
+    <!-- عنوان وروؤس المكتب -->
+    <div class="brand-header">
+        <h1>مكتب الوسام للخدمات التعليمية والمنح الدراسية</h1>
+        <p>بوابة القبول الجامعي الموحد والخدمات الأكاديمية الاحترافية</p>
     </div>
 
-    <!-- الخطوة 1: اختيار نوع الخدمة الأساسية -->
-    <div id="stepChooseService" class="step-view active">
-        <h3 style="text-align: center; color: var(--primary); margin-bottom: 25px;">اختر نوع الخدمة الأكاديمية المطلوبة:</h3>
+    <!-- 1. اختيار نوع الخدمة الأساسية -->
+    <div id="panelService" class="step-panel active">
+        <h3 style="text-align: center; color: var(--primary); margin-bottom: 25px;">اختر مسار الخدمات التعليمية:</h3>
         
-        <div class="service-card" onclick="selectService('المنح الدراسية الدولية')">
+        <div class="card-choice" onclick="chooseMainService('المنح الدراسية الدولية')">
             <h3>🌍 المنح الدراسية الدولية</h3>
-            <p style="margin: 0; color: #666; font-size: 14px;">التقديم على المنح الحكومية والكاملة (مصرية، تركية، صينية، سعودية)</p>
+            <p style="margin: 0; color: #627d98; font-size: 14px;">التقديم على المنح الحكومية والكاملة (مصرية، تركية، صينية، سعودية)</p>
         </div>
 
-        <div class="service-card" onclick="selectService('الجامعات')">
+        <div class="card-choice" onclick="chooseMainService('الجامعات')">
             <h3>🎓 الجامعات (الانتظام / الرسوم الخاصة)</h3>
-            <p style="margin: 0; color: #666; font-size: 14px;">التقديم المباشر للجامعات (مصرية، صينية، سودانية)</p>
+            <p style="margin: 0; color: #627d98; font-size: 14px;">التقديم المباشر للجامعات (مصرية، صينية، سودانية)</p>
         </div>
     </div>
 
-    <!-- الخطوة 2: تسجيل الدخول أو إنشاء حساب -->
-    <div id="stepAuthChoice" class="step-view">
-        <h3 id="authChoiceTitle" style="text-align: center; color: var(--primary); margin-bottom: 20px;"></h3>
+    <!-- 2. خيار تسجيل الدخول أو إنشاء حساب -->
+    <div id="panelAuthChoice" class="step-panel">
+        <h3 id="authChoiceHeading" style="text-align: center; color: var(--primary); margin-bottom: 20px;"></h3>
         <div style="text-align: center; max-width: 400px; margin: 0 auto;">
-            <button class="btn-official" onclick="goToSection('loginSection')" style="margin-bottom: 15px;">لديك حساب مسجل؟ (تسجيل الدخول)</button>
-            <button class="btn-official btn-alt" onclick="goToSection('registerSection')">ليس لديك حساب؟ (إنشاء حساب جديد)</button>
+            <button class="btn-action" onclick="showScreen('panelLogin')" style="margin-bottom: 15px;">لديك حساب مسجل؟ (تسجيل الدخول)</button>
+            <button class="btn-action btn-secondary" onclick="showScreen('panelRegister')">ليس لديك حساب؟ (إنشاء حساب جديد)</button>
             <br><br>
-            <a style="color: #666; cursor: pointer; font-size: 13px;" onclick="goToSection('stepChooseService')">⬅ العودة لاختيار الخدمة</a>
+            <a style="color: #627d98; cursor: pointer; font-size: 13px;" onclick="showScreen('panelService')">⬅ العودة لاختيار المسار</a>
         </div>
     </div>
 
     <!-- واجهة تسجيل الدخول -->
-    <div id="loginSection" class="step-view">
-        <h3 style="color: var(--primary); margin-bottom: 20px; text-align: center;">تسجيل دخول الطالب</h3>
-        <div id="loginAlert" class="alert-box"></div>
+    <div id="panelLogin" class="step-panel">
+        <h3 style="color: var(--primary); margin-bottom: 20px; text-align: center;">تسجيل الدخول إلى النظام</h3>
+        <div id="loginAlertBox" class="msg-alert"></div>
 
-        <form onsubmit="handleLogin(event)">
-            <div class="form-row">
-                <label><span class="required-star">*</span> البريد الإلكتروني:</label>
-                <input type="email" id="loginEmail" required placeholder="student@domain.com">
+        <form onsubmit="processLogin(event)">
+            <div class="field-group">
+                <label><span class="req-star">*</span> البريد الإلكتروني:</label>
+                <input type="email" id="loginEmailInput" required placeholder="student@domain.com">
             </div>
-            <div class="form-row">
-                <label><span class="required-star">*</span> كلمة المرور:</label>
-                <input type="password" id="loginPassword" required placeholder="أدخل كلمة المرور">
+            <div class="field-group">
+                <label><span class="req-star">*</span> كلمة المرور:</label>
+                <input type="password" id="loginPassInput" required placeholder="أدخل كلمة المرور الخاصة بك">
             </div>
-            <button type="submit" class="btn-official">دخول للنظام</button>
+            <button type="submit" class="btn-action">دخول الحساب</button>
         </form>
-        <div class="switch-link">
-            <a onclick="goToSection('stepChooseService')">العودة للرئيسية</a>
+        <div class="navigation-link">
+            <a onclick="showScreen('panelAuthChoice')">العودة للخلف</a>
         </div>
     </div>
 
-    <!-- واجهة إنشاء حساب جديد (مع شرط التحقق والرمز) -->
-    <div id="registerSection" class="step-view">
+    <!-- واجهة إنشاء حساب جديد -->
+    <div id="panelRegister" class="step-panel">
         <h3 style="color: var(--primary); margin-bottom: 20px; text-align: center;">إنشاء حساب طالب جديد</h3>
-        <div id="registerAlert" class="alert-box"></div>
+        <div id="registerAlertBox" class="msg-alert"></div>
 
-        <form onsubmit="handleRegister(event)">
-            <div class="form-row">
-                <label><span class="required-star">*</span> الاسم الكامل:</label>
-                <input type="text" id="regName" required placeholder="الاسم الثلاثي أو الرباعي">
+        <form onsubmit="processRegister(event)">
+            <div class="field-group">
+                <label><span class="req-star">*</span> الاسم الكامل:</label>
+                <input type="text" id="regNameInput" required placeholder="الاسم الثلاثي أو الرباعي">
             </div>
-            <div class="form-row">
-                <label><span class="required-star">*</span> البريد الإلكتروني (لتلقي رسالة التفعيل):</label>
-                <input type="email" id="regEmail" required placeholder="student@domain.com">
+            <div class="field-group">
+                <label><span class="req-star">*</span> البريد الإلكتروني:</label>
+                <input type="email" id="regEmailInput" required placeholder="student@domain.com">
             </div>
-            <div class="form-row">
-                <label><span class="required-star">*</span> كلمة المرور:</label>
-                <input type="password" id="regPassword" required placeholder="أنشئ كلمة مرور قوية">
+            <div class="field-group">
+                <label><span class="req-star">*</span> كلمة المرور:</label>
+                <input type="password" id="regPassInput" required placeholder="أنشئ كلمة مرور آمنة">
             </div>
-            <!-- خانة أنا لست روبوت -->
-            <div class="captcha-box">
-                <input type="checkbox" id="notRobotCheck" required>
-                <label for="notRobotCheck" style="margin: 0; cursor: pointer; font-weight: 500;">أنا لست روبوت (تحقق أمني)</label>
+            <div class="security-box">
+                <input type="checkbox" id="robotCheck" required>
+                <label for="robotCheck" style="margin: 0; cursor: pointer; font-weight: 600;">أنا لست روبوت (تحقق أمني)</label>
             </div>
-            <button type="submit" class="btn-official">إنشاء الحساب وإرسال تفعيل البريد</button>
+            <button type="submit" class="btn-action">إنشاء الحساب وإرسال رمز التفعيل</button>
         </form>
-        <div class="switch-link">
-            لديك حساب بالفعل؟ <a onclick="goToSection('loginSection')">سجل دخولك</a>
+        <div class="navigation-link">
+            لديك حساب مسبقاً؟ <a onclick="showScreen('panelLogin')">سجل دخولك من هنا</a>
         </div>
     </div>
 
-    <!-- الخطوة 3: استمارة التقديم والخيارات الدقيقة والمستندات الإلزامية وغير الإلزامية -->
-    <div id="applicationSection" class="step-view">
-        <h3 style="color: var(--primary); border-bottom: 2px solid var(--primary); padding-bottom: 8px; margin-bottom: 20px;">استمارة التقديم الأكاديمي الموحد</h3>
+    <!-- واجهة إدخال وتأكيد رمز التفعيل (تظهر فور التسجيل) -->
+    <div id="panelVerify" class="step-panel">
+        <h3 style="color: var(--primary); margin-bottom: 10px; text-align: center;">تفعيل الحساب الإلزامي</h3>
+        <p style="text-align: center; color: #627d98; font-size: 14px; margin-bottom: 20px;">تم إرسال رمز التفعيل إلى بريدك الإلكتروني بنجاح.</p>
         
-        <form onsubmit="submitApplication(event)">
-            <input type="hidden" id="appHiddenName">
-            <input type="hidden" id="appHiddenEmail">
-            <input type="hidden" id="appChosenService">
+        <div id="verifyAlertBox" class="msg-alert"></div>
 
-            <div class="form-row" id="scholarshipSubGroup" style="display: none;">
-                <label><span class="required-star">*</span> اختر برنامج المنحة المطلوبة:</label>
-                <select id="scholarshipSelect">
+        <form onsubmit="processVerification(event)">
+            <div class="field-group" style="text-align: center;">
+                <label><span class="req-star">*</span> أدخل رمز التفعيل المكون من 4 أرقام:</label>
+                <input type="text" id="verificationCodeInput" required placeholder="مثال: 4821" style="max-width: 250px; margin: 0 auto; text-align: center; font-size: 20px; letter-spacing: 5px;" maxlength="4">
+            </div>
+            <button type="submit" class="btn-action" style="max-width: 250px; margin: 0 auto; display: block;">تفعيل الحساب الآن</button>
+        </form>
+    </div>
+
+    <!-- 3. استمارة التقديم الشاملة -->
+    <div id="panelApplication" class="step-panel">
+        <h3 style="color: var(--primary); border-bottom: 2px solid var(--primary); padding-bottom: 10px; margin-bottom: 20px;">استمارة التقديم والقبول الإلكتروني الموحد</h3>
+        
+        <form onsubmit="submitFinalApplication(event)">
+            <input type="hidden" id="hiddenStudentName">
+            <input type="hidden" id="hiddenStudentEmail">
+
+            <div class="field-group" id="scholarshipDropdownGroup" style="display: none;">
+                <label><span class="req-star">*</span> اختر برنامج المنحة المطلوبة:</label>
+                <select id="scholarshipTypeSelect" onchange="checkSelectionAndShowDocs()">
                     <option value="">-- اختر المنحة --</option>
                     <option value="المنحة المصرية">المنحة المصرية</option>
                     <option value="المنحة التركية">المنحة التركية</option>
@@ -314,9 +335,9 @@
                 </select>
             </div>
 
-            <div class="form-row" id="universitySubGroup" style="display: none;">
-                <label><span class="required-star">*</span> اختر وجهة الجامعات:</label>
-                <select id="universitySelect">
+            <div class="field-group" id="universityDropdownGroup" style="display: none;">
+                <label><span class="req-star">*</span> اختر وجهة الجامعات:</label>
+                <select id="universityTypeSelect" onchange="checkSelectionAndShowDocs()">
                     <option value="">-- اختر الوجهة الجامعية --</option>
                     <option value="الجامعات المصرية">الجامعات المصرية</option>
                     <option value="الجامعات الصينية">الجامعات الصينية</option>
@@ -324,188 +345,248 @@
                 </select>
             </div>
 
-            <hr style="border: 0; border-top: 1px solid #e9ecef; margin: 25px 0;">
-            <h4 style="color: var(--secondary); margin-bottom: 15px;">المستندات والأوراق الثبوتية:</h4>
-
-            <!-- مستندات إلزامية بنجمة حمراء -->
-            <div class="form-row">
-                <label><span class="required-star">*</span> صورة جواز السفر (إلزامي):</label>
-                <input type="file" id="passportFile" required>
+            <div class="field-group" id="majorDropdownGroup" style="display: none;">
+                <label><span class="req-star">*</span> اختر التخصص الأكاديمي المطلوب:</label>
+                <select id="majorSelect" onchange="checkSelectionAndShowDocs()" required>
+                    <option value="">-- اختر التخصص --</option>
+                    <optgroup label="القطاع الطبي والصحي">
+                        <option value="طب بشري (Human Medicine)">طب بشري (Human Medicine)</option>
+                        <option value="طب أسنان (Dentistry)">طب أسنان (Dentistry)</option>
+                        <option value="صيدلة (Pharmacy)">صيدلة (Pharmacy)</option>
+                        <option value="تمريض (Nursing)">تمريض (Nursing)</option>
+                        <option value="مختبرات طبية (Medical Laboratories)">مختبرات طبية (Medical Laboratories)</option>
+                        <option value="علاج طبيعي (Physical Therapy)">علاج طبيعي (Physical Therapy)</option>
+                    </optgroup>
+                    <optgroup label="قطاع الهندسة والتكنولوجيا">
+                        <option value="هندسة حاسوب وتكنولوجيا المعلومات (Computer Engineering & IT)">هندسة حاسوب وتكنولوجيا المعلومات</option>
+                        <option value="هندسة معمارية (Architecture Engineering)">هندسة معمارية</option>
+                        <option value="هندسة مدنية (Civil Engineering)">هندسة مدنية</option>
+                        <option value="هندسة ميكانيكية أو كهربائية (Mechanical/Electrical Engineering)">هندسة ميكانيكية / كهربائية</option>
+                        <option value="هندسة الطبية الحيوية (Biomedical Engineering)">هندسة طبية حيوية</option>
+                    </optgroup>
+                    <optgroup label="العلوم الإدارية والإنسانية">
+                        <option value="إدارة أعمال (Business Administration)">إدارة أعمال</option>
+                        <option value="محاسبة ومالية (Accounting & Finance)">محاسبة ومالية</option>
+                        <option value="علاقات دولية ودبلوماسية (International Relations)">علاقات دولية ودبلوماسية</option>
+                        <option value="لغات وترجمة (Languages & Translation)">لغات وترجمة</option>
+                        <option value="قانون وحقوق (Law)">قانون وحقوق</option>
+                    </optgroup>
+                </select>
             </div>
 
-            <div class="form-row">
-                <label><span class="required-star">*</span> شهادة الثانوية العامة / كشف الدرجات (إلزامي):</label>
-                <input type="file" id="highschoolFile" required>
-            </div>
+            <!-- قسم المستندات الثبوتية: يظهر فقط بعد اختيار المسار والتخصص بالكامل -->
+            <div id="documentsContainerSection" class="hidden-section">
+                <hr style="border: 0; border-top: 2px dashed #cbd5e1; margin: 30px 0;">
+                <h4 style="color: var(--primary); margin-bottom: 20px;">المستندات والأوراق الثبوتية المطلوبة:</h4>
 
-            <!-- مستندات اختيارية (غير إلزامية) -->
-            <div class="form-row">
-                <label>الصورة الشخصية (اختياري):</label>
-                <input type="file" id="personalPhoto">
-            </div>
+                <div class="field-group">
+                    <label><span class="req-star">*</span> صورة جواز السفر (إلزامي):</label>
+                    <input type="file" id="passportFileField" required>
+                </div>
 
-            <div class="form-row">
-                <label>خطاب الدافع / Motivation Letter (اختياري):</label>
-                <input type="file" id="motivFile">
-            </div>
+                <div class="field-group">
+                    <label><span class="req-star">*</span> شهادة الثانوية العامة / كشف الدرجات (إلزامي):</label>
+                    <input type="file" id="highschoolFileField" required>
+                </div>
 
-            <div class="form-row">
-                <label>خطاب التوصية / Recommendation Letter (اختياري):</label>
-                <input type="file" id="recomFile">
-            </div>
+                <div class="field-group">
+                    <label>الصورة الشخصية (اختياري):</label>
+                    <input type="file" id="photoFileField">
+                </div>
 
-            <div class="form-row">
-                <label><span class="required-star">*</span> ملاحظات التخصص والتفاصيل:</label>
-                <textarea id="appNotes" required placeholder="اكتب التخصص المطلوب بالترتيب وأي ملاحظات هامة..."></textarea>
-            </div>
+                <div class="field-group">
+                    <label>خطاب الدافع / Motivation Letter (اختياري):</label>
+                    <input type="file" id="motivFileField">
+                </div>
 
-            <button type="submit" class="btn-official" style="background-color: var(--success);">إرسال الطلب النهائي إلى مكتب الوسام</button>
+                <div class="field-group">
+                    <label>خطاب التوصية / Recommendation Letter (اختياري):</label>
+                    <input type="file" id="recomFileField">
+                </div>
+
+                <button type="submit" class="btn-action" style="background-color: var(--success); margin-top: 15px;">إرسال الطلب النهائي إلى مكتب الوسام</button>
+            </div>
         </form>
     </div>
 
-    <!-- صفحة تتبع الطلب -->
-    <div id="statusSection" class="step-view">
-        <h3 style="color: var(--primary); text-align: center; margin-bottom: 20px;">حالة الطلب الأكاديمي</h3>
-        <div class="status-box">
-            <p style="margin: 0; font-size: 16px; font-weight: bold;">حالة الطلب الحالية:</p>
-            <div class="status-tag">تم إرسال الطلب وقيد المراجعة والمطابقة الإلكترونية ⏳</div>
-            <p style="margin-top: 15px; font-size: 14px; color: #555;">
-                تم استلام طلبك ومستنداتك بنجاح وتحويلها لطاقم العمل في مكتب الوسام. سيتم التواصل معك قريباً.
+    <!-- واجهة حالة الطلب -->
+    <div id="panelStatus" class="step-panel">
+        <h3 style="color: var(--primary); text-align: center; margin-bottom: 20px;">متابعة حالة الطلب</h3>
+        <div class="status-box-view">
+            <p style="margin: 0; font-size: 17px; font-weight: bold;">حالة طلبك في المنصة:</p>
+            <div class="status-badge">تم استلام طلبك ومستنداتك بنجاح ⏳</div>
+            <p style="margin-top: 15px; font-size: 14px; color: #486581;">
+                تم تحويل طلبك لطاقم العمل في مكتب الوسام للمطابقة الإلكترونية. سيتم التواصل معك عبر البريد الإلكتروني.
             </p>
         </div>
     </div>
 
-    <!-- روابط التواصل الاجتماعي الرسمية في الأسفل -->
-    <div class="social-footer">
-        <p style="margin: 0 0 10px 0; font-size: 14px; color: #555; font-weight: bold;">تابعنا عبر منصات مكتب الوسام الرسمية:</p>
+    <!-- روابط التواصل الاجتماعي الرسمية -->
+    <div class="social-links-footer">
+        <p>تابعنا عبر منصات مكتب الوسام الرسمية:</p>
         <a href="https://www.facebook.com" target="_blank" class="fb-btn">مكتب الوسام للتقديم</a>
-        <a href="https://www.tiktok.com" target="_blank" class="tiktok-btn">مكتب الوسام للتقديم والمنح الجامعية</a>
+        <a href="https://www.tiktok.com" target="_blank" class="tiktok-btn">مكتب الوسام للتقديم والمنح الدراسية</a>
     </div>
 </div>
 
 <script>
-    let selectedMainService = "";
-    let activeStudent = null;
+    let activeMainService = "";
+    let authenticatedUser = null;
+    let pendingVerificationEmail = "";
 
-    function goToSection(sectionId) {
-        document.querySelectorAll('.step-view').forEach(sec => sec.classList.remove('active'));
-        document.getElementById(sectionId).classList.add('active');
+    function showScreen(screenId) {
+        document.querySelectorAll('.step-panel').forEach(panel => panel.classList.remove('active'));
+        document.getElementById(screenId).classList.add('active');
         window.scrollTo(0, 0);
-        document.querySelectorAll('.alert-box').forEach(al => al.style.display = 'none');
+        document.querySelectorAll('.msg-alert').forEach(alert => alert.style.display = 'none');
     }
 
-    function showAlert(elementId, text, type) {
-        const box = document.getElementById(elementId);
+    function triggerAlert(alertId, text, type) {
+        const box = document.getElementById(alertId);
         box.innerText = text;
-        box.className = 'alert-box ' + (type === 'error' ? 'alert-error' : 'alert-success');
+        box.className = 'msg-alert ' + (type === 'error' ? 'msg-error' : 'msg-success');
         box.style.display = 'block';
     }
 
-    function selectService(serviceName) {
-        selectedMainService = serviceName;
-        document.getElementById('authChoiceTitle').innerText = "لقد اخترت: " + serviceName;
-        goToSection('stepAuthChoice');
+    function chooseMainService(serviceType) {
+        activeMainService = serviceType;
+        document.getElementById('authChoiceHeading').innerText = "المسار المحدد: " + serviceType;
+        showScreen('panelAuthChoice');
     }
 
-    // تسجيل حساب جديد مع إرسال رسالة تفعيل هاتفية/فورية وشرط التفعيل
-    function handleRegister(event) {
+    function processRegister(event) {
         event.preventDefault();
-        const name = document.getElementById('regName').value.trim();
-        const email = document.getElementById('regEmail').value.trim();
-        const password = document.getElementById('regPassword').value;
+        const name = document.getElementById('regNameInput').value.trim();
+        const email = document.getElementById('regEmailInput').value.trim();
+        const password = document.getElementById('regPassInput').value;
 
-        if (localStorage.getItem('wesam_user_' + email)) {
-            showAlert('registerAlert', 'خطأ: هذا البريد الإلكتروني مسجل مسبقاً!', 'error');
+        if (localStorage.getItem('wesam_portal_user_' + email)) {
+            triggerAlert('registerAlertBox', 'خطأ: هذا البريد الإلكتروني مسجل مسبقاً في النظام!', 'error');
             return;
         }
 
-        const student = { name, email, password, isVerified: false };
-        localStorage.setItem('wesam_user_' + email, JSON.stringify(student));
+        // توليد رمز تفعيل عشوائي مكون من 4 أرقام
+        const generatedCode = Math.floor(1000 + Math.random() * 9000).toString();
 
-        // محاكاة إرسال رسالة تفعيل حقيقية لبريد الطالب
-        showAlert('registerAlert', 'تم إنشاء الحساب بنجاح! تم إرسال رسالة تفعيل إلى بريدك (' + email + '). يرجى تفعيل الحساب لتتمكن من الدخول.', 'success');
+        const newUser = { name, email, password, code: generatedCode, verified: false };
+        localStorage.setItem('wesam_portal_user_' + email, JSON.stringify(newUser));
+        pendingVerificationEmail = email;
+
+        // تنبيه يوضح رمز التفعيل الذي تم إرساله لبريد الطالب
+        alert("تم إنشاء الحساب بنجاح وإرسال رسالة تفعيل إلى إيميلك (" + email + ").\n\n[رمز التفعيل التجريبي الخاص بك هو: " + generatedCode + "]");
         
-        // تفعيل الحساب تلقائياً للمحاكاة بعد قراءة الرسالة وتحويله لتسجيل الدخول
-        setTimeout(() => {
-            student.isVerified = true;
-            localStorage.setItem('wesam_user_' + email, JSON.stringify(student));
-            goToSection('loginSection');
-        }, 3000);
+        showScreen('panelVerify');
     }
 
-    // التحقق الصارم من بيانات الدخول (إذا كانت كلمة المرور أو الإيميل خطأ يظهر خطأ أحمر)
-    function handleLogin(event) {
+    function processVerification(event) {
         event.preventDefault();
-        const email = document.getElementById('loginEmail').value.trim();
-        const password = document.getElementById('loginPassword').value;
+        const enteredCode = document.getElementById('verificationCodeInput').value.trim();
+        const storedRecord = localStorage.getItem('wesam_portal_user_' + pendingVerificationEmail);
 
-        const storedData = localStorage.getItem('wesam_user_' + email);
-        if (!storedData) {
-            showAlert('loginAlert', 'خطأ: البريد الإلكتروني غير مسجل في النظام!', 'error');
+        if (!storedRecord) {
+            triggerAlert('verifyAlertBox', 'حدث خطأ في النظام، يرجى إعادة التسجيل.', 'error');
             return;
         }
 
-        const student = JSON.parse(storedData);
+        const user = JSON.parse(storedRecord);
 
-        if (student.password !== password) {
-            showAlert('loginAlert', 'خطأ: كلمة المرور غير صحيحة! يرجى التأكد وإعادة المحاولة.', 'error');
+        if (user.code !== enteredCode) {
+            triggerAlert('verifyAlertBox', 'خطأ: رمز التفعيل غير صحيح! تأكد من الرقم الذي وصل لبريدك.', 'error');
             return;
         }
 
-        // شرط التحقق من تفعيل البريد قبل الدخول
-        if (!student.isVerified) {
-            showAlert('loginAlert', 'خطأ: يجب تفعيل الحساب عبر رسالة البريد الإلكتروني أولاً قبل الدخول!', 'error');
-            return;
-        }
+        user.verified = true;
+        localStorage.setItem('wesam_portal_user_' + pendingVerificationEmail, JSON.stringify(user));
 
-        activeStudent = student;
-        document.getElementById('appHiddenName').value = student.name;
-        document.getElementById('appHiddenEmail').value = student.email;
-        document.getElementById('appChosenService').value = selectedMainService;
-
-        // إظهار حقول الخيارات بناءً على الخدمة المختارة
-        if (selectedMainService === 'المنح الدراسية الدولية') {
-            document.getElementById('scholarshipSubGroup').style.display = 'block';
-            document.getElementById('universitySubGroup').style.display = 'none';
-        } else {
-            document.getElementById('scholarshipSubGroup').style.display = 'none';
-            document.getElementById('universitySubGroup').style.display = 'block';
-        }
-
-        showAlert('loginAlert', 'تم تسجيل الدخول بنجاح!', 'success');
+        triggerAlert('verifyAlertBox', 'تم تفعيل الحساب بنجاح! جارٍ تحويلك لتسجيل الدخول...', 'success');
         setTimeout(() => {
-            goToSection('applicationSection');
+            showScreen('panelLogin');
+        }, 1500);
+    }
+
+    function processLogin(event) {
+        event.preventDefault();
+        const email = document.getElementById('loginEmailInput').value.trim();
+        const password = document.getElementById('loginPassInput').value;
+
+        const storedRecord = localStorage.getItem('wesam_portal_user_' + email);
+        if (!storedRecord) {
+            triggerAlert('loginAlertBox', 'خطأ: البريد الإلكتروني غير مسجل في النظام!', 'error');
+            return;
+        }
+
+        const user = JSON.parse(storedRecord);
+        if (user.password !== password) {
+            triggerAlert('loginAlertBox', 'خطأ: كلمة المرور غير صحيحة! يرجى التحقق وإعادة المحاولة.', 'error');
+            return;
+        }
+
+        if (!user.verified) {
+            triggerAlert('loginAlertBox', 'خطأ: هذا الحساب غير مفعل! يرجى إتمام تفعيل الحساب أولاً.', 'error');
+            return;
+        }
+
+        authenticatedUser = user;
+        document.getElementById('hiddenStudentName').value = user.name;
+        document.getElementById('hiddenStudentEmail').value = user.email;
+
+        if (activeMainService === 'المنح الدراسية الدولية') {
+            document.getElementById('scholarshipDropdownGroup').style.display = 'block';
+            document.getElementById('universityDropdownGroup').style.display = 'none';
+        } else {
+            document.getElementById('scholarshipDropdownGroup').style.display = 'none';
+            document.getElementById('universityDropdownGroup').style.display = 'block';
+        }
+        document.getElementById('majorDropdownGroup').style.display = 'block';
+
+        triggerAlert('loginAlertBox', 'تم تسجيل الدخول بنجاح!', 'success');
+        setTimeout(() => {
+            showScreen('panelApplication');
         }, 600);
     }
 
-    // إرسال الطلب المباشر لإيميلك wesam.scholarships@gmail.com مع المستندات والبيانات
-    function submitApplication(event) {
-        event.preventDefault();
-        const name = document.getElementById('appHiddenName').value;
-        const email = document.getElementById('appHiddenEmail').value;
-        const notes = document.getElementById('appNotes').value;
-        
-        let subOption = selectedMainService === 'المنح الدراسية الدولية' ? 
-            document.getElementById('scholarshipSelect').value : 
-            document.getElementById('universitySelect').value;
+    function checkSelectionAndShowDocs() {
+        const majorVal = document.getElementById('majorSelect').value;
+        const scholarshipVal = document.getElementById('scholarshipTypeSelect').value;
+        const universityVal = document.getElementById('universityTypeSelect').value;
 
-        const subject = encodeURIComponent("طلب اكاديمي جديد من: " + name);
-        const body = encodeURIComponent(
+        const isSubSelected = (activeMainService === 'المنح الدراسية الدولية' && scholarshipVal !== '') || 
+                              (activeMainService === 'الجامعات' && universityVal !== '');
+
+        if (isSubSelected && majorVal !== '') {
+            document.getElementById('documentsContainerSection').classList.remove('hidden-section');
+        } else {
+            document.getElementById('documentsContainerSection').classList.add('hidden-section');
+        }
+    }
+
+    function submitFinalApplication(event) {
+        event.preventDefault();
+        const name = document.getElementById('hiddenStudentName').value;
+        const email = document.getElementById('hiddenStudentEmail').value;
+        const major = document.getElementById('majorSelect').value;
+        
+        let subTarget = activeMainService === 'المنح الدراسية الدولية' ? 
+            document.getElementById('scholarshipTypeSelect').value : 
+            document.getElementById('universityTypeSelect').value;
+
+        const mailSubject = encodeURIComponent("طلب قبول جامعي جديد من الطالب: " + name);
+        const mailBody = encodeURIComponent(
             "بيانات الطالب المسجل:\n" +
             "الاسم: " + name + "\n" +
             "البريد الإلكتروني: " + email + "\n\n" +
-            "تفاصيل الطلب:\n" +
-            "القسم الرئيسي: " + selectedMainService + "\n" +
-            "البرنامج المختار: " + subOption + "\n" +
-            "الملاحظات: " + notes + "\n\n" +
-            "(ملاحظة: مرفقات جواز السفر وشهادة الثانوية إجبارية وتم إرفاقها من الطالب)."
+            "التفاصيل الأكاديمية:\n" +
+            "المسار الرئيسي: " + activeMainService + "\n" +
+            "الوجهة/المنحة: " + subTarget + "\n" +
+            "التخصص المختار: " + major + "\n\n" +
+            "(ملاحظة: تم إرفاق المستندات الإلزامية كجواز السفر وشهادة الثانوية)."
         );
 
-        window.location.href = "mailto:wesam.scholarships@gmail.com?subject=" + subject + "&body=" + body;
+        window.location.href = "mailto:wesam.scholarships@gmail.com?subject=" + mailSubject + "&body=" + mailBody;
 
-        alert('تم تجهيز وإرسال الطلب بنجاح إلى إيميل مكتب الوسام!');
+        alert('تم إرسال الطلب وتجهيز المستندات لإيميل مكتب الوسام بنجاح!');
         setTimeout(() => {
-            goToSection('statusSection');
+            showScreen('panelStatus');
         }, 1000);
     }
 </script>
